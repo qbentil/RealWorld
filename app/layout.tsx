@@ -2,6 +2,7 @@ import "./globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import DefNavbar from "@/components/nav";
+import Footer from "@/components/footer";
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 
@@ -34,6 +35,7 @@ export default function RootLayout({
         />
         <DefNavbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

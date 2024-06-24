@@ -29,9 +29,7 @@ const NavItem: React.FC<NavItemProps> = ({ Icon, name, href }) => {
 
 
 const Sidebar = () => {
-
     const path = usePathname()
-    const pathnames = path.split("/")
     return (
         <div className="w-full h-full bg-primary-800">
             {/* logo */}
@@ -40,7 +38,6 @@ const Sidebar = () => {
                 <p className='font-bold text-white text-xl'>Accede-Feeds</p>
             </div>
             <div className='flex items-start justify-center pl-6 mt-6 gap-y-4 flex-col w-full'>
-                {/* nav with icons */}
                 {
                     SideNavs.map((nav) => (
                         <NavItem key={nav.name} {...nav} href={`${path}${nav.href}`} />

@@ -11,7 +11,7 @@ export const SideNavs = [
     {
         name: 'My Articles',
         Icon: Book1,
-        href: '/article'
+        href: '/articles'
     },
     {
         name: 'New Article',

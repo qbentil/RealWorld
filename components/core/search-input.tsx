@@ -13,26 +13,22 @@ interface SearchSelectInputProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
-  labelHidden?: boolean;
-  values: any;
-  errors?: any;
-  touched?: any
-  setFieldValue?: any
+  handleChange: (query: string) => void;
 }
 
-const SearchSelectInput: FC<SearchSelectInputProps> = ({ id, values, setFieldValue, placeholder, label, errors, touched, required, labelHidden, disabled }) => {
-
-  const [query, setQuery] = useState('')
+const SearchSelectInput: FC<SearchSelectInputProps> = ({ id, placeholder, label, disabled, handleChange }) => {
 
   return (
 
-    <form className="flex items-center max-w-sm mx-auto">
+    <form className="w-full flex items-center mx-auto">
       <label htmlFor="simple-search" className="sr-only">Search</label>
       <div className="relative w-full">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <FaSearch className="text-gray-400" />
         </div>
-        <input type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-none block w-full ps-10 p-2.5   " placeholder="Search all..." required />
+        <input type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-none block w-full ps-10 p-2.5   " placeholder="Search all..." required onChange={
+          (e) => handleChange(e.target.value)
+        } />
       </div>
     </form>
 

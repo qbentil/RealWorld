@@ -1,8 +1,15 @@
-import React from 'react'
+"use client"
+
+import React, { useState } from 'react'
+
+import HeroSection from '@/components/hero'
 
 const Page = () => {
+  const [query, setQuery] = useState<string>('')
   return (
-    <div>Home</div>
+    <div className='min-h-screen'>
+      <HeroSection onQuery={setQuery} />
+    </div>
   )
 }
 

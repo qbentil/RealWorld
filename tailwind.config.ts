@@ -15,17 +15,18 @@ const config: Config = {
       },
       colors: {
         primary: {
-          "50": "#E1F9F9",  // Lightest shade
-          "100": "#B3F2F2", // Very light shade
-          "200": "#80EAE9", // Light shade
-          "300": "#4DE2DF", // Light-medium shade
-          "400": "#26D9D6", // Medium shade
-          "500": "#1AC8C3", // Base color
-          "600": "#17B3AF", // Medium-dark shade
-          "700": "#129C9A", // Darker shade
-          "800": "#0D8585", // Dark shade
-          "900": "#076F6F", // Darkest shade
+          "50": "#F9F5FF",  // Lightest shade
+          "100": "#C5B9EF", // Very light shade
+          "200": "#A18EE6", // Light shade
+          "300": "#7D63DE", // Light-medium shade
+          "400": "#6243D4", // Medium shade
+          "500": "#6941C6", // Base color
+          "600": "#5E3AB3", // Medium-dark shade
+          "700": "#5333A0", // Darker shade
+          "800": "#472B8D", // Dark shade
+          "900": "#3C247A", // Darkest shade
         },
+        
         secondary: {
           "50": "#E1F3FA",  // Lightest shade
           "100": "#B3E0F4", // Very light shade

@@ -15,28 +15,29 @@ const config: Config = {
       },
       colors: {
         primary: {
-          "50": "#E1ECF9",
-          "100": "#64748B",
-          "200": "#7EADE7",
-          "300": "#4287DB",
-          "400": "#2161B0",
-          "500": "#153D6F",
-          "600": "#11325A",
-          "700": "#0D2645",
-          "800": "#1A202E",
-          "900": "#040C15",
+          "50": "#E1F9F9",  // Lightest shade
+          "100": "#B3F2F2", // Very light shade
+          "200": "#80EAE9", // Light shade
+          "300": "#4DE2DF", // Light-medium shade
+          "400": "#26D9D6", // Medium shade
+          "500": "#1AC8C3", // Base color
+          "600": "#17B3AF", // Medium-dark shade
+          "700": "#129C9A", // Darker shade
+          "800": "#0D8585", // Dark shade
+          "900": "#076F6F", // Darkest shade
         },
         secondary: {
-          "100": "#FDFDCB",
-          "200": "#FBFC98",
-          "300": "#F5F664",
-          "400": "#ECED3D",
-          "500": "#E0E203",
-          "600": "#C0C202",
-          "700": "#A0A201",
-          "800": "#818300",
-          "900": "#6B6C00",
-        },
+          "50": "#E1F3FA",  // Lightest shade
+          "100": "#B3E0F4", // Very light shade
+          "200": "#80CBEE", // Light shade
+          "300": "#4DB6E7", // Light-medium shade
+          "400": "#26A5E0", // Medium shade
+          "500": "#0BA5D6", // Base color
+          "600": "#0892BF", // Medium-dark shade
+          "700": "#067EA8", // Darker shade
+          "800": "#056B91", // Dark shade
+          "900": "#03587A", // Darkest shade
+        },        
         tertiary: {
           "100": "#F5FDCB",
           "200": "#E8FC97",

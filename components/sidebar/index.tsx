@@ -18,7 +18,7 @@ const NavItem: React.FC<NavItemProps> = ({ Icon, name, href }) => {
     const active = usePathname() === href
     return (
         <p className="flex items-center justify-start w-full">
-            <Link href={href} className={`flex items-center justify-start w-full h-full  ${!active ? "text-white hover:text-primary-300 hover:border-r-2 hover:border-primary-300" : "text-primary-300 border-r-2 border-primary-300"}`}>
+            <Link href={href} className={`flex items-center justify-start w-full h-full  ${!active ? "text-white hover:text-primary-300 hover:border-r-2 hover:border-primary-300" : "text-primary-100 border-r-2 border-primary-200"}`}>
                 <Icon />
                 <span className="ml-4">{name}</span>
             </Link>

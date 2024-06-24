@@ -10,7 +10,7 @@ const Navbar = () => {
     const path = usePathname()
     return (
         <div className='w-full h-full flex justify-between items-center px-4'>
-            <h1 className='text-xl font-semibold text-primary-300 capitalize'>{path}</h1>
+            <h1 className='text-xl font-semibold text-secondary-300 capitalize'>{path}</h1>
             {/* nav items and user profile */}
             <div className='flex items-center justify-center gap-x-2'>
                 {/* user profile with avatar  and active status green dot */}

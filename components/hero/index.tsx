@@ -3,7 +3,7 @@ import SearchSelectInput from '../core/search-input'
 
 const HeroSection: React.FC<{ onQuery: (s: string) => void }> = ({ onQuery }) => {
     return (
-        <div className='w-screen flex flex-col gap-y-4 py-5 items-center justify-center min-h-[50vh] px-4'>
+        <div className='w-screen flex flex-col gap-y-4 py-5 items-center justify-center px-4'>
             <div className='flex items-center justify-center bg-primary-50 text-primary-600 rounded-full font-bold px-4 py-1'>
                 Conduit
             </div>

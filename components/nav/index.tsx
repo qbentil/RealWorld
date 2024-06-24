@@ -13,7 +13,7 @@ const DefNavbar = () => {
   };
 
   return (
-    <div className='bg-white w-screen flex items-center justify-between px-4 md:px-10 py-2'>
+    <div className='bg-[#f7f9fc] w-screen flex items-center justify-between px-4 md:px-10 py-2'>
       {/* Logo or Name */}
       <Link href={"/"} className='text-xl font-bold text-primary-800'>
         Conduits

@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className="text-gray-900 bg-[#D0D5DD] w-screen overflow-x-hidden overflow-y-auto"
+        className="text-gray-900 w-screen overflow-x-hidden overflow-y-auto"
       >
         <ToastContainer
           position="top-right"

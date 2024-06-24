@@ -1,12 +1,13 @@
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
 
+import DefNavbar from "@/components/nav";
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
-  title: "DCM Payment Gateway Dasboard",
-  description: "Payment Gateway Dasboard",
+  title: "Conduit Feeds",
+  description: "Conduit feeds",
 };
 
 export default function RootLayout({
@@ -31,6 +32,7 @@ export default function RootLayout({
           pauseOnFocusLoss
           theme="light"
         />
+        <DefNavbar />
         {children}
       </body>
     </html>

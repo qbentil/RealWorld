@@ -7,7 +7,7 @@ import HeroSection from '@/components/hero'
 const Page = () => {
   const [query, setQuery] = useState<string>('')
   return (
-    <div className='min-h-screen'>
+    <div className='h-full'>
       <HeroSection onQuery={setQuery} />
     </div>
   )

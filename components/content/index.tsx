@@ -14,7 +14,6 @@ const Content = () => {
             <Article />
             <Article />
             <Article />
-            <Article />
         </div>
     )
 }

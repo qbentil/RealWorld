@@ -7,7 +7,7 @@ import React from 'react';
 
 const Article = () => {
     return (
-        <div className="w-full  p-6 border-b border-gray-200 ">
+        <div className="w-full  md:p-6 py-2 border-b border-gray-200 ">
             <div className="flex items-center mb-4 justify-between">
                 <div className='flex'>
                     <img
@@ -38,12 +38,10 @@ const Article = () => {
                 <Link href="/" className="text-primary-500 hover:underline">
                     Read more...
                 </Link>
-                <div className='flex flex-wrap gap-x-2 text-sm'>
-                    <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border">Tag 1</p>
-                    <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border">Tag 1</p>
-                    <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border">Tag 1</p>
-                    <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border">Tag 1</p>
-                    <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border">Tag 1</p>
+                <div className='flex flex-wrap gap-x-2 text-[0.5rem] md:text-sm'>
+                    <p className="text-primary-500 font-bold rounded-full px-2 md:px-3 py-1 border-primary-300 border">Tag 1</p>
+                    <p className="text-primary-500 font-bold rounded-full px-2 md:px-3 py-1 border-primary-300 border">Tag 1</p>
+                    <p className="text-primary-500 font-bold rounded-full px-2 md:px-3 py-1 border-primary-300 border">Tag 1</p>
                 </div>
             </div>
         </div>

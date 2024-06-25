@@ -1,12 +1,6 @@
 
 import Footer from "@/components/footer";
 import DefNavbar from "@/components/nav";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Conduit Feeds",
-  description: "Conduit feeds",
-};
 
 export default function RootLayout({
   children,
@@ -14,10 +8,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    < >
+    <div>
       <DefNavbar />
       {children}
       <Footer />
-    </>
+    </div>
   );
 }

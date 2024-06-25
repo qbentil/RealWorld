@@ -1,6 +1,10 @@
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Account | Conduit Feeds",
+  description: "User Account | Conduit feeds",
+};
 export default function RootLayout({
   children,
 }: Readonly<{

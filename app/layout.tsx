@@ -1,8 +1,5 @@
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
-
-import DefNavbar from "@/components/nav";
-import Footer from "@/components/footer";
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 
@@ -19,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className="text-gray-900 w-screen overflow-x-hidden overflow-y-auto"
+        className="text-gray-900 w-screen overflow-x-hidden"
       >
         <ToastContainer
           position="top-right"

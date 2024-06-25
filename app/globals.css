@@ -3,3 +3,43 @@
 @tailwind utilities;
 
 
+body::-webkit-scrollbar,
+.scrollbar-show::-webkit-scrollbar {
+  width: 0.4em;
+  border-radius: 50vh;
+  cursor: pointer;
+}
+
+body::-webkit-scrollbar-track,
+.scrollbar-show::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px #0000004d;
+}
+
+body::-webkit-scrollbar-thumb,
+.scrollbar-show::-webkit-scrollbar-thumb {
+  background-color: #59595a;
+  outline: none;
+}
+
+.cs-scroll::-webkit-scrollbar,
+.scrollbar-show::-webkit-scrollbar {
+  width: 0.5rem;
+
+}
+
+.cs-scroll::-webkit-scrollbar-thumb,
+.scrollbar-show::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 0.5rem;
+}
+
+.sm-x-scroll::-webkit-scrollbar,
+.scrollbar-show::-webkit-scrollbar {
+  height: 0.5rem;
+}
+
+.sm-x-scroll::-webkit-scrollbar-thumb,
+.scrollbar-show::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 0.5rem;
+}

@@ -4,6 +4,7 @@ import { Heart } from 'iconsax-react';
 import { IoMdHeart } from 'react-icons/io';
 import Link from 'next/link';
 import React from 'react';
+import ArticleTage from './tags';
 
 const Article = () => {
     return (
@@ -35,14 +36,10 @@ const Article = () => {
                 lorem loren lorem lorem lorem lorem
             </p>
             <div className='flex items-center justify-between'>
-                <Link href="/" className="text-primary-500 hover:underline">
+                <Link href="/article/1" className="text-primary-500 hover:underline">
                     Read more...
                 </Link>
-                <div className='flex flex-wrap gap-x-2 text-[0.5rem] md:text-sm'>
-                    <p className="text-primary-500 font-bold rounded-full px-2 md:px-3 py-1 border-primary-300 border">Tag 1</p>
-                    <p className="text-primary-500 font-bold rounded-full px-2 md:px-3 py-1 border-primary-300 border">Tag 1</p>
-                    <p className="text-primary-500 font-bold rounded-full px-2 md:px-3 py-1 border-primary-300 border">Tag 1</p>
-                </div>
+                <ArticleTage />
             </div>
         </div>
     );

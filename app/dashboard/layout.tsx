@@ -9,7 +9,7 @@ export default function RootLayout({
   return (
     <>
       {/* sidebar with 30% */}
-      <div className="flex h-full w-full">
+      <div className="flex h-screen w-screen overflow-hidden">
         <div className="w-1/6 h-full">
           <Sidebar />
         </div>
@@ -21,7 +21,6 @@ export default function RootLayout({
           <main className="p-4">{children}</main>
         </div>
       </div>
-      {children}
     </>
 
   );

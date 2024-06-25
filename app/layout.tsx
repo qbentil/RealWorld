@@ -33,9 +33,7 @@ export default function RootLayout({
           pauseOnFocusLoss
           theme="light"
         />
-        <DefNavbar />
         {children}
-        <Footer />
       </body>
     </html>
   );

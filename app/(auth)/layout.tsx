@@ -1,3 +1,6 @@
+import { Back, Link1 } from "iconsax-react";
+import Link from "next/link";
+
 export default function AuthLayout({
     children,
 }: Readonly<{
@@ -11,6 +14,12 @@ export default function AuthLayout({
                     </div>
                     <div className="flex-col justify-center p-6 sm:p-10 lg:flex-none bg-white/80 backdrop-blur-xl rounded">
                         {children}
+                        <div className="flex justify-center items-center text-sm text-primary-600 hover:text-primary-500 mt-2">
+                            <Back />
+                            <Link href="/" className="">
+                                To Global Feeds
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -82,7 +82,7 @@ const Page = () => {
                         </div>
                         <div className="flex text-left text-sm text-gray-600 gap-x-1">
                             Already have account?
-                            <Link href="/forgot-password" className="text-primary-600 hover:text-primary-500">
+                            <Link href="/signin" className="text-primary-600 hover:text-primary-500">
                                 signin
                             </Link>
                         </div>

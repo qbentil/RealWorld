@@ -8,10 +8,6 @@ import NavbarUser from './user';
 
 const DefNavbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Simulated login state
-  const [dropdown, setDropdown] = useState(false);
-  const user = {
-    username: 'JohnDoe',
-  };
 
   return (
     <div className='bg-[#f7f9fc] w-screen flex items-center justify-between px-4 md:px-10 py-2'>

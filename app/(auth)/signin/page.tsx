@@ -9,6 +9,7 @@ import TextInput from '@/components/core/text-input';
 import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
+import { Back } from 'iconsax-react';
 
 const LoginPage = () => {
     const [loading, setLoading] = React.useState<boolean>(false)

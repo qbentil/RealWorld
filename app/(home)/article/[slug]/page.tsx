@@ -7,7 +7,6 @@ import Link from "next/link"
 import { useState } from "react"
 
 const Page = () => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
   return (
     <div className='w-screen flex flex-col items-center justify-center'>
       <div className='w-full flex items-center justify-center bg-gray-300'>

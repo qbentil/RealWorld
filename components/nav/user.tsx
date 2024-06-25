@@ -24,12 +24,9 @@ const NavbarUser = () => {
                 {
                     dropdown && (
                         <div className='absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg'>
-                            {
-                                path.includes('/dashboard') ? (
-                                    <Link href='/' className='block px-4 py-2 hover:bg-primary-50'>Home</Link>
-                                ) : <Link href='/dashboard' className='block px-4 py-2 hover:bg-primary-50'>Dashboard</Link>
-                            }
-                            <Link href='/logout' className='block px-4 py-2 hover:bg-primary-50'>Logout</Link>
+                            <Link href='/profile' className='block px-4 py-2 hover:bg-primary-50' onClick={() => setDropdown(!dropdown)}>Profile</Link>
+                            <Link href='/editor' className='block px-4 py-2 hover:bg-primary-50' onClick={() => setDropdown(!dropdown)}>New Article</Link>
+                            <Link href='/' className='block px-4 py-2 hover:bg-primary-50' onClick={() => setDropdown(!dropdown)} >Logout</Link>
                         </div>
                     )
                 }

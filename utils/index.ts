@@ -1,5 +1,5 @@
 import { ITab } from "@/interface";
-import { Book1, Global, GlobalEdit, HeartTick, Home, NoteAdd, ReceiptEdit, Setting2, ShieldSecurity, UserEdit } from "iconsax-react";
+import { Book1, Global, GlobalEdit, HeartTick, Home, NoteAdd, ReceiptEdit, Setting2, ShieldSecurity, TagUser, UserEdit } from "iconsax-react";
 
 export { default as classNames } from "./classnames";
 
@@ -46,11 +46,11 @@ export const HomeTabs: ITab[] = [
 export const ProfileTabs: ITab[] = [
     {
         name: 'Profile',
-        label: 'Site Settings',
-        Icon: GlobalEdit
+        label: 'My Profile',
+        Icon: TagUser
     },
     {
-        name: 'profile',
+        name: 'settings',
         label: 'Profile Settings',
         Icon: UserEdit
     },

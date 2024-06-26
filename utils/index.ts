@@ -1,6 +1,6 @@
 import { ITab } from "@/interface";
-import { Book1, Global, GlobalEdit, HeartTick, Home, NoteAdd, ReceiptEdit, Setting2, ShieldSecurity, TagUser, UserEdit } from "iconsax-react";
-
+import { Book1, Global, HeartTick, Home, NoteAdd, ReceiptEdit, Setting2, ShieldSecurity, TagUser, UserEdit } from "iconsax-react";
+import { format } from "date-fns";
 export { default as classNames } from "./classnames";
 
 export const SideNavs = [
@@ -60,3 +60,13 @@ export const ProfileTabs: ITab[] = [
         Icon: ShieldSecurity
     }
 ]
+
+export function formatDate(date: string, withTime = false): string {
+    const formatString = withTime ? "do MMMM yyyy h:mm a" : "do MMMM yyyy";
+    try {
+        return format(new Date(date), formatString);
+    } catch (error) {
+        console.error("Invalid date value:", date);
+        return "";
+    }
+}

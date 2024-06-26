@@ -45,7 +45,7 @@ export const HomeTabs: ITab[] = [
 ]
 export const ProfileTabs: ITab[] = [
     {
-        name: 'Profile',
+        name: 'profile',
         label: 'My Profile',
         Icon: TagUser
     },

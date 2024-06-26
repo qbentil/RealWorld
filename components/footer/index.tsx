@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <footer className='bg-white w-full flex items-center justify-between px-4 md:px-10 py-2'>
+        <footer className='absolute bottom-0 bg-white w-full flex items-center justify-between px-4 md:px-10 py-2'>
             <div className='text-gray-600'>
                 &copy; {new Date().getFullYear()} All rights reserved.
             </div>

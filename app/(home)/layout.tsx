@@ -8,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="min-h-screen relative pb-10">
       <DefNavbar />
       {children}
       <Footer />

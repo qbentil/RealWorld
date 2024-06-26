@@ -1,4 +1,4 @@
-import { DecodeBase64, EncodeBase64 } from "@/utils";
+import { IUser } from "@/interface";
 
 export const fetchUser = (callback: (user: any) => void) => {
   let userInfo = null;
@@ -12,7 +12,7 @@ export const fetchUser = (callback: (user: any) => void) => {
 };
 
 
-export const setUser = (user: any) => {
+export const setUser = (user: IUser) => {
   if (typeof window !== "undefined") {
     sessionStorage.setItem("loggedin_user", JSON.stringify(user));
   }

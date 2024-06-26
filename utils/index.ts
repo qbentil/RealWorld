@@ -1,6 +1,5 @@
 import { ITab } from "@/interface";
 import { Book1, Global, HeartTick, Home, NoteAdd, ReceiptEdit, Setting2, ShieldSecurity, TagUser, UserEdit } from "iconsax-react";
-
 export { default as classNames } from "./classnames";
 import { format } from "date-fns";
 

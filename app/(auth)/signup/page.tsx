@@ -9,6 +9,7 @@ import TextInput from '@/components/core/text-input';
 import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
+import UserService from '@/app/services/user.service';
 
 const Page = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
@@ -23,19 +24,21 @@ const Page = () => {
         validationSchema: Yup.object().shape({
             username: Yup.string().required(),
             email: Yup.string().email().required(),
-            password: Yup.string().min(8).max(12).required(),
+            password: Yup.string().required(),
         }),
         onSubmit: async (values) => {
             setLoading(true)
-            console.log(values);
-
-            const timer = setTimeout(() => {
+            UserService.signup(values, (error, data) => {
                 setLoading(false)
-                router.push("/signin");
-                toasts.success("Success", "Continue to login.");
-            }, 3000); // 30000 milliseconds = 30 seconds
-
-            return () => clearTimeout(timer);
+                if (error) {
+                    toasts.error("", error)
+                    setLoading(false)
+                    return
+                }
+                console.log(data)
+                toasts.success("Sucess", "Signup successful")
+                router.push("/signin")
+            })
         }
     })
 

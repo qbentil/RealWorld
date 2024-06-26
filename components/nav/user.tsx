@@ -6,7 +6,7 @@ import React from 'react'
 
 const NavbarUser = () => {
     const [dropdown, setDropdown] = React.useState(false)
-    const [{ }, dispatch] = useStateValue()
+    const [{ user }, dispatch] = useStateValue()
     const logout = () => {
         dispatch({
             type: 'LOGOUT'
@@ -19,8 +19,8 @@ const NavbarUser = () => {
     return (
         <div className='flex items-center space-x-4'>
             {/* User Info */}
-            <Image src="/assets/avatar.jpeg" alt='User Avatar' className='w-8 h-8 hidden md:block rounded-full border' width={32} height={32} />
-            <span>{"user.username"}</span>
+            <Image src={user.image} alt='User Avatar' className='w-8 h-8 hidden md:block rounded-full border' width={32} height={32} />
+            <span>{user.username}</span>
             {/* Dropdown Menu */}
             <div className='relative'>
                 <button
@@ -36,7 +36,7 @@ const NavbarUser = () => {
                         <div className='absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg'>
                             <Link href='/profile' className='block px-4 py-2 hover:bg-primary-50' onClick={() => setDropdown(!dropdown)}>Profile</Link>
                             <Link href='/editor' className='block px-4 py-2 hover:bg-primary-50' onClick={() => setDropdown(!dropdown)}>New Article</Link>
-                            <p onClick={logout} className='block px-4 py-2 hover:bg-primary-50' >Logout</p>
+                            <p onClick={logout} className=' cursor-pointer block px-4 py-2 hover:bg-primary-50' >Logout</p>
                         </div>
                     )
                 }

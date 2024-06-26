@@ -102,3 +102,13 @@ const isBase64 = (str: string): boolean => {
         return false;
     }
 };
+
+
+export const formatAPIErrors = (errors: Record<string, string[]>) => {
+    return Object.entries(errors).map(([key, messages]) => {
+        return `${key}: ${messages.join(', ')}`;
+    }).join('; ');
+};
+
+
+export const devMode = process.env.NEXT_PUBLIC_NODE_ENV === "development"

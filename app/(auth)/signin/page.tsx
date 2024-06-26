@@ -9,9 +9,10 @@ import TextInput from '@/components/core/text-input';
 import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
-import { Back } from 'iconsax-react';
-import { setUser } from '@/hooks/localStorage';
 import { useStateValue } from '@/context/StateProvider';
+import UserService from '@/app/services/user.service';
+import { IUser } from '@/interface';
+import { setToken, setUser } from '@/hooks/localStorage';
 
 const LoginPage = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
@@ -25,21 +26,36 @@ const LoginPage = () => {
         },
         validationSchema: Yup.object().shape({
             email: Yup.string().email().required(),
-            password: Yup.string().min(8).max(12).required(),
+            password: Yup.string().required(),
         }),
         onSubmit: async (values) => {
             setLoading(true)
-            console.log(values);
-            setLoading(false)
-            setUser(values)
-            dispatch({
-                type: 'SET_USER',
-                payload: values
+            UserService.login(values, (error, data: IUser) => {
+                setLoading(false)
+                if (error) {
+                    toasts.error("", error)
+                    setLoading(false)
+                    return
+                }
+
+                // Dispatch user to global state
+                dispatch({
+                    type: "SET_USER",
+                    payload: data
+                })
+                dispatch({
+                    type: "SET_TOKEN",
+                    payload: data.token
+                })
+
+
+                // store user and token in local storage
+                setUser(data)
+                setToken(data.token)
+
+                toasts.success("Sucess", `Welcome back ${data.username}`)
+                router.push("/")
             })
-            router.push('/')
-            toasts.success("Successful", "Welcome..", {
-                position: 'bottom-right',
-            });
         }
     })
 

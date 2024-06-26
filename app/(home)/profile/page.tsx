@@ -2,6 +2,7 @@
 
 import Article from "@/components/article"
 import ArticleTage from "@/components/article/tags"
+import SettingContent from "@/components/settings"
 import Tabs from "@/components/tabs"
 import { ProfileTabs } from "@/utils"
 import { Add } from "iconsax-react"
@@ -11,7 +12,7 @@ import { useState } from "react"
 import { IoMdHeart } from "react-icons/io"
 
 const Page = () => {
-  const [tab, setTab] = useState<string>('pofile')
+  const [tab, setTab] = useState<string>('settings')
   return (
     <div className='w-screen flex flex-col items-center justify-center'>
       <div className='w-full flex items-center justify-center bg-gray-300'>
@@ -56,6 +57,10 @@ const Page = () => {
       </div>
       <div className='w-[80%] flex items-center justify-center py-2'>
         <Tabs tab={tab} setTab={setTab} tabs={ProfileTabs} />
+      </div>
+      {/* page constent */}
+      <div className='w-[80%] flex items-center justify-center'>
+        <SettingContent tab={tab} />
       </div>
     </div>
   )

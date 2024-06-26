@@ -1,18 +1,25 @@
 import React from 'react';
 
-const Tags = () => {
+const tags = ["Tag 1", "Tag 2", "Tag 3", "Tag 4", "Tag 5", "Tag 6"]
+
+
+const Tags = ({ setTag }: { setTag: (tag: string) => void }) => {
     return (
-        <div className='w-full md:w-[20%] bg-red-400 p-4'>
+        <div className='w-full md:w-[25%] bg-gray-200 p-4'>
             <h2 className='text-lg font-bold mb-2'>
                 Popular Tags
             </h2>
             <div className='flex flex-wrap gap-2'>
-                <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border hover:bg-primary-500 hover:text-white cursor-pointer">Tag sdfghjhgfdsdfgh1</p>
-                <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border hover:bg-primary-500 hover:text-white cursor-pointer">Tag 2</p>
-                <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border hover:bg-primary-500 hover:text-white cursor-pointer">Tag 3</p>
-                <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border hover:bg-primary-500 hover:text-white cursor-pointer">Tag 4</p>
-                <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border hover:bg-primary-500 hover:text-white cursor-pointer">Tag 5</p>
-                <p className="text-primary-500 font-bold rounded-full px-3 py-1 border-primary-300 border hover:bg-primary-500 hover:text-white cursor-pointer">Tag 6</p>
+                {
+                    tags.map((tag, index) => (
+                        <div
+                            key={index}
+                            onClick={() => setTag(tag)}
+                            className='bg-gray-300 text-gray-800 px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-primary-600 hover:text-white'>
+                            {tag}
+                        </div>
+                    ))
+                }
             </div>
         </div>
     );

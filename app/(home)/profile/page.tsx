@@ -2,12 +2,16 @@
 
 import Article from "@/components/article"
 import ArticleTage from "@/components/article/tags"
+import Tabs from "@/components/tabs"
+import { ProfileTabs } from "@/utils"
 import { Add } from "iconsax-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 import { IoMdHeart } from "react-icons/io"
 
 const Page = () => {
+  const [tab, setTab] = useState<string>('pofile')
   return (
     <div className='w-screen flex flex-col items-center justify-center'>
       <div className='w-full flex items-center justify-center bg-gray-300'>
@@ -50,14 +54,8 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className='w-screen flex items-center justify-center'>
-        <div className='w-full md:w-[70%] flex flex-col gap-y-4 py-5 items-start justify-center px-4'>
-          <p className='text-sm text-primary-500'>Welcome back bentil!</p>
-          {/* divider */}
-          <div className='w-full border-b border-gray-200 my-4' />
-          <Article />
-          <Article />
-        </div>
+      <div className='w-[80%] flex items-center justify-center py-2'>
+        <Tabs tab={tab} setTab={setTab} tabs={ProfileTabs} />
       </div>
     </div>
   )

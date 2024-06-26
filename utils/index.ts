@@ -1,4 +1,5 @@
-import { Book1, Home, NoteAdd, Setting2 } from "iconsax-react";
+import { ITab } from "@/interface";
+import { Book1, Global, GlobalEdit, HeartTick, Home, NoteAdd, ReceiptEdit, Setting2, ShieldSecurity, UserEdit } from "iconsax-react";
 
 export { default as classNames } from "./classnames";
 
@@ -22,5 +23,40 @@ export const SideNavs = [
         name: 'Settings',
         Icon: Setting2,
         href: '/settings'
+    }
+]
+
+export const HomeTabs: ITab[] = [
+    {
+        name: 'global_feed',
+        label: 'Global Feeds',
+        Icon: Global
+    },
+    {
+        name: 'favorited_feed',
+        label: 'Favorites',
+        Icon: HeartTick
+    },
+    {
+        name: 'my_feed',
+        label: 'My Articles',
+        Icon: ReceiptEdit
+    }
+]
+export const ProfileTabs: ITab[] = [
+    {
+        name: 'Profile',
+        label: 'Site Settings',
+        Icon: GlobalEdit
+    },
+    {
+        name: 'profile',
+        label: 'Profile Settings',
+        Icon: UserEdit
+    },
+    {
+        name: 'security',
+        label: 'Change Password',
+        Icon: ShieldSecurity
     }
 ]

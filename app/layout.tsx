@@ -2,6 +2,9 @@ import "./globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
+import reducer from "@/context/reducer";
+import initialState from "@/context/initialState";
+import { StateProvider } from "@/context/StateProvider";
 
 export const metadata: Metadata = {
   title: "Conduit Feeds",
@@ -30,7 +33,9 @@ export default function RootLayout({
           pauseOnFocusLoss
           theme="light"
         />
-        {children}
+        <StateProvider reducer={reducer} initialState={initialState}>
+          {children}
+        </StateProvider>
       </body>
     </html>
   );

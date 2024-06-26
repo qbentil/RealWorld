@@ -1,20 +1,22 @@
-/* eslint-disable @next/next/no-img-element */
 
 import { Heart } from 'iconsax-react';
 import { IoMdHeart } from 'react-icons/io';
 import Link from 'next/link';
 import React from 'react';
 import ArticleTage from './tags';
+import Image from 'next/image';
 
 const Article = () => {
     return (
         <div className="w-full  md:p-6 py-2 border-b border-gray-200 ">
             <div className="flex items-center mb-4 justify-between">
                 <div className='flex'>
-                    <img
+                    <Image
                         src={"/assets/avatar.jpeg"}
                         alt={`John's avatar`}
                         className="w-12 h-12 rounded-full mr-4"
+                        width={48}
+                        height={48}
                     />
                     <div>
                         <div className="text-primary-500 font-bold">Name</div>

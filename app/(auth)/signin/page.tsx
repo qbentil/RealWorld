@@ -10,9 +10,12 @@ import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
 import { Back } from 'iconsax-react';
+import { setUser } from '@/hooks/localStorage';
+import { useStateValue } from '@/context/StateProvider';
 
 const LoginPage = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [{ }, dispatch] = useStateValue()
     const router = useRouter()
 
     const { handleSubmit, ...form } = useFormik({
@@ -27,16 +30,16 @@ const LoginPage = () => {
         onSubmit: async (values) => {
             setLoading(true)
             console.log(values);
-
-            const timer = setTimeout(() => {
-                setLoading(false)
-                router.push("/dashboard");
-                toasts.success("Successful", "Welcome..", {
-                    position: 'bottom-right',
-                });
-            }, 3000); // 30000 milliseconds = 30 seconds
-
-            return () => clearTimeout(timer);
+            setLoading(false)
+            setUser(values)
+            dispatch({
+                type: 'SET_USER',
+                payload: values
+            })
+            router.push('/')
+            toasts.success("Successful", "Welcome..", {
+                position: 'bottom-right',
+            });
         }
     })
 

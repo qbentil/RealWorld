@@ -22,6 +22,12 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         token: action.payload
       };
+    case 'LOGOUT':
+      return {
+        ...state,
+        user: null,
+        token: null
+      };
     default:
       throw new Error("Invalid action type in context.");
   }

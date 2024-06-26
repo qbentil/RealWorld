@@ -10,6 +10,7 @@ import TextInput from "../core/text-input";
 import TextAreaInput from "../core/textarea-input";
 import { DocumentUpload, GalleryEdit, GalleryRemove } from "iconsax-react";
 import toasts from "@/utils/toasts";
+import { FaCameraRetro } from "react-icons/fa";
 
 const PasswordPolicyInitialState = {
   lname: "",
@@ -84,7 +85,7 @@ const Profile = () => {
                   className="  text-primary-600 text-3xl rounded-full"
                   htmlFor="file-input"
                 >
-                  <DocumentUpload className="text-3xl" />
+                  <FaCameraRetro className="text-3xl" />
                 </label>
               </label>
             </>

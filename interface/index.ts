@@ -45,6 +45,27 @@ export interface IUser extends IUserSignup {
     image: string;
 }
 
+export interface IAuthor {
+    username: string;
+    bio: string;
+    image: string;
+    following: boolean;
+}
+
+export interface IArticle {
+    slug: string;
+    title: string;
+    description: string;
+    body: string;
+    tagList: string[];
+    createdAt: string;
+    updatedAt: string;
+    favorited: boolean;
+    favoritesCount: number;
+    author: IAuthor;
+}
+
+
 export interface IServerAuthResponse extends IServerResponse {
     user: IUser
 }

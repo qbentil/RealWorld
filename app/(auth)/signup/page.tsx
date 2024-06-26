@@ -9,7 +9,7 @@ import TextInput from '@/components/core/text-input';
 import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
-import UserService from '@/app/services/user.service';
+import UserService from '@/services/user.service';
 
 const Page = () => {
     const [loading, setLoading] = React.useState<boolean>(false)

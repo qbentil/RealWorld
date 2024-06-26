@@ -1,17 +1,19 @@
 "use client"
 
+import { Add } from "iconsax-react"
 import AuthWrapper from "@/components/authwrapper"
+import Image from "next/image"
+import { IoMdHeart } from "react-icons/io"
+import Link from "next/link"
+import { ProfileTabs } from "@/utils"
 import SettingContent from "@/components/settings"
 import Tabs from "@/components/tabs"
-import { ProfileTabs } from "@/utils"
-import { Add } from "iconsax-react"
-import Image from "next/image"
-import Link from "next/link"
 import { useState } from "react"
-import { IoMdHeart } from "react-icons/io"
+import { useStateValue } from "@/context/StateProvider"
 
 const Page = () => {
-  const [tab, setTab] = useState<string>('settings')
+  const [tab, setTab] = useState<string>('profile')
+  const [{ user }] = useStateValue()
   return (
     <AuthWrapper>
       <div className='w-screen flex flex-col items-center justify-center'>
@@ -21,14 +23,14 @@ const Page = () => {
               <div className='w-full flex flex-col md:flex-row gap-y-4 md:gap-x-4 items-center md:items-center justify-center md:justify-start '>
                 <div className='flex'>
                   <Image
-                    src={"/assets/avatar.jpeg"}
+                    src={user?.image}
                     alt={`John's avatar`}
                     className="w-12 h-12 rounded-full mr-4"
                     width={48}
                     height={48}
                   />
                   <div>
-                    <div className="text-primary-500 font-bold">John Nkrumah</div>
+                    <div className="text-primary-500 font-bold">{user?.username}</div>
                     <div className="text-gray-500 text-sm font-thin">Jan 24, 2024</div>
                   </div>
                 </div>

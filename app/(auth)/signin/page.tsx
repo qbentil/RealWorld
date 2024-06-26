@@ -10,7 +10,7 @@ import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
 import { useStateValue } from '@/context/StateProvider';
-import UserService from '@/app/services/user.service';
+import UserService from '@/services/user.service';
 import { IUser } from '@/interface';
 import { setToken, setUser } from '@/hooks/localStorage';
 

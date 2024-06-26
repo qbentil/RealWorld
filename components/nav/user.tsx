@@ -1,17 +1,23 @@
-import { useStateValue } from '@/context/StateProvider'
-import toasts from '@/utils/toasts'
+import { removeToken, removeUser } from '@/hooks/localStorage'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import toasts from '@/utils/toasts'
+import { useStateValue } from '@/context/StateProvider'
 
 const NavbarUser = () => {
     const [dropdown, setDropdown] = React.useState(false)
     const [{ user }, dispatch] = useStateValue()
     const logout = () => {
+        setDropdown(!dropdown)
         dispatch({
             type: 'LOGOUT'
         })
-        setDropdown(!dropdown)
+        // remove user from local storage
+
+        removeUser()
+        removeToken()
         toasts.success("Successful", "Logged out..", {
             position: 'bottom-right',
         });

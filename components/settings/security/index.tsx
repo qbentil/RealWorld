@@ -1,9 +1,13 @@
 import * as Yup from 'yup';
 
+import { IUser } from '@/interface';
 import { LockCircle } from 'iconsax-react'
 import React from 'react'
 import TextInput from '@/components/core/text-input';
+import UserService from '@/services/user.service';
+import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
+import { useStateValue } from '@/context/StateProvider';
 
 const PasswordChangeInitialState = {
   password: '',
@@ -11,17 +15,32 @@ const PasswordChangeInitialState = {
   confirmPassword: '',
 }
 const CHangepassword = () => {
+  const [{ user }, dispatch] = useStateValue()
+  const [loading, setLoading] = React.useState<boolean>(false)
   const { handleSubmit, ...form } = useFormik({
     initialValues: PasswordChangeInitialState,
     validationSchema: Yup.object().shape({
-      password: Yup.string().min(8).max(12).required(),
+      password: Yup.string().required(),
       newPassword: Yup.string().min(8).max(12).required(),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('newPassword'), ""], 'Passwords must match')
         .required('Confirm Password is required'),
     }),
     onSubmit: (values) => {
-      console.log(values)
+      setLoading(true)
+      const updated: IUser = {
+        ...user,
+        password: values.newPassword,
+      }
+      UserService.update(updated, (error, data) => {
+        setLoading(false)
+        if (error) {
+          console.log({ error })
+          toasts.error("Error", error)
+          return
+        }
+        toasts.success("Success", "Password updated successfully")
+      })
     }
   })
 
@@ -61,7 +80,9 @@ const CHangepassword = () => {
             />
           </div>
           <div className='w-full flex justify-end'>
-            <button className='bg-primary-600 text-white px-4 py-2 rounded-md'>Change Password</button>
+            <button disabled={loading} className='bg-primary-600 text-white px-4 py-2 rounded-md disabled:cursor-not-allowed'>
+              {loading ? "Hang on..." : "Change Password"}
+            </button>
           </div>
         </form>
       </div>

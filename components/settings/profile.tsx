@@ -1,113 +1,64 @@
 import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import TextInput from "../core/text-input";
-import { FaCameraRetro } from "react-icons/fa";
+import Image from "next/image";
+import { formatDate } from "../../utils";
 
-const PasswordPolicyInitialState = {
-  minLength: 8,
-  requireUppercase: "Yes",
-  requireLowercase: "Yes",
-  requireSpecialCharacter: "Yes",
-  requireNumber: "Yes",
+interface User {
+  profilePicture: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  bio: string;
+  numberOfArticles: number;
+  articlesFavorited: number;
+  accountCreatedDate: string;
+}
+
+const user: User = {
+  profilePicture: "/assets/avatar.jpeg",
+  firstName: "Shadrack",
+  lastName: "Bentil",
+  email: "bentilshadrack72@gmail.com",
+  phone: "+233 24 123 4567",
+  bio: "I am a software engineer passionate about building impactful solutions.",
+  numberOfArticles: 10,
+  articlesFavorited: 5,
+  accountCreatedDate: "2022-01-15",
 };
 
-const Site = () => {
-  const { handleSubmit, ...form } = useFormik({
-    initialValues: PasswordPolicyInitialState,
-    validationSchema: Yup.object().shape({
-      minLength: Yup.number().min(8).required("Minimum length is required"),
-      requireUppercase: Yup.string()
-        .oneOf(["Yes", "No"])
-        .required("This field is required"),
-      requireLowercase: Yup.string()
-        .oneOf(["Yes", "No"])
-        .required("This field is required"),
-      requireSpecialCharacter: Yup.string()
-        .oneOf(["Yes", "No"])
-        .required("This field is required"),
-      requireNumber: Yup.string()
-        .oneOf(["Yes", "No"])
-        .required("This field is required"),
-    }),
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
-
+const Profile: React.FC = () => {
   return (
-    <main className="w-full md:w-2/3 h-full py-20 px-4 flex flex-row justify-between gap-8">
-      <div className="w-full space-y-6">
-        <div className="w-full flex justify-between items-center space-x-20">
-          <h1 className=" w-[15%] text-nowrap text-base">Company Name</h1>
-          <div className=" flex-1 w-full ">
-            <TextInput
-              id="conpanyName"
-              type="text"
-              placeholder="AskPBS"
-              {...form}
-            />
-          </div>
+    <main className="w-full h-full py-2 flex flex-col md:flex-row justify-between gap-8">
+      {/* Profile Picture */}
+      <div className="w-full md:w-2/5 flex flex-col gap-y-2 items-start">
+        <div className="relative border border-primary-100 p-6 rounded-md">
+          <Image
+            src={user.profilePicture}
+            alt="Profile Picture"
+            className="w-56 h-52 rounded-full"
+            width={224}
+            height={224}
+          />
         </div>
-        <div className="w-full flex justify-between items-center space-x-20">
-          <h1 className=" w-[15%] text-nowrap text-base">Tageline</h1>
-          <div className="w-full flex-1 ">
-            <TextInput
-              id="tageline"
-              type="text"
-              placeholder="Official Website"
-              {...form}
-            />
-            <p className=" py-2 text-primary-200 ">
-              In a few words, express what this site is about. Example:
-              “E-commerce Website”
-            </p>
-          </div>
+      </div>
+      {/* Profile Data */}
+      <div className="w-full  flex flex-col gap-y-4">
+        <h2 className="text-2xl font-semibold">
+          {user.firstName} {user.lastName}
+        </h2>
+        <div className="flex item-center justify-start gap-x-3">
+          <p className="text-gray-600">{user.email}</p>
+          <p className="text-gray-600">{user.phone}</p>
         </div>
-        <div className="w-full flex justify-between items-center space-x-20">
-          <h1 className=" w-[15%] text-nowrap text-base">Phone</h1>
-          <div className=" flex-1 w-full">
-            <TextInput
-              id="phone"
-              type="number"
-              placeholder="+233 556 081 4869"
-              {...form}
-            />
-          </div>
-        </div>
-        <div className="w-full flex justify-between items-center space-x-20">
-          <h1 className=" w-[15%] text-nowrap text-base">Email</h1>
-          <div className=" flex-1 w-full">
-            <TextInput
-              id="email"
-              type="email"
-              placeholder="bentilshadrack72@gmail.com"
-              {...form}
-            />
-          </div>
-        </div>
-        <div className="w-full flex justify-between items-center space-x-20">
-          <h1 className=" w-[15%] text-nowrap text-base">Logo</h1>
-          <div className=" flex-1 w-full ">
-            <button className=" flex gap-3 text-primary-200">
-              {" "}
-              <FaCameraRetro size={24} /> Add Photo/An Image{" "}
-            </button>
-          </div>
-        </div>
-        <div className="w-full flex justify-between items-center space-x-20">
-          <h1 className="w-[15%] text-nowrap text-base">Site Address</h1>
-          <div className=" flex-1 w-full">
-            <TextInput
-              id="site_address"
-              type="text"
-              placeholder="http://AskPBS.com"
-              {...form}
-            />
-          </div>
+        <p className="text-gray-600">{user.bio}</p>
+        <div className="flex flex-col gap-y-2">
+          <p><strong>Number of Articles Posted:</strong> {user.numberOfArticles}</p>
+          <p><strong>Articles Favorited:</strong> {user.articlesFavorited}</p>
+          <p><strong>Account Created:</strong> {formatDate(user.accountCreatedDate, true)}</p>
         </div>
       </div>
     </main>
   );
 };
-export default Site;
+
+export default Profile;

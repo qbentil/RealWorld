@@ -1,7 +1,7 @@
 import Settings from "./settings";
 import React from "react";
 import Security from "./security";
-import Profile from "./settings";
+import Profile from "./profile";
 
 const SettingContent = ({ tab }: { tab: string }) => {
   return (

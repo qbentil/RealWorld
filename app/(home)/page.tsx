@@ -3,6 +3,7 @@
 import { ArrowDown, GlobalSearch, Hashtag, HeartTick, ReceiptEdit } from 'iconsax-react'
 import React, { useEffect, useState } from 'react'
 
+import ArticlesPreloader from '@/components/preloaders/articles'
 import Content from '@/components/content'
 import HeroSection from '@/components/hero'
 import { HomeTabs } from '@/utils'
@@ -82,7 +83,7 @@ const Page = () => {
             }
           </div>
           {
-            !articles.length ? <p>Loading..</p> : <Content />
+            !articles.length ? <ArticlesPreloader /> : <Content />
           }
           {/* load more button */}
           <div className='flex justify-center w-full mt-4'>

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useStateValue } from '@/context/StateProvider';
+import Preloader from '../preloaders';
 import { useRouter } from 'next/navigation';
-import Preloader from '../preloader';
+import { useStateValue } from '@/context/StateProvider';
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     const [{ token, user }, dispatch] = useStateValue();

@@ -1,22 +1,23 @@
 "use client"
 
+import { ArrowDown, GlobalSearch, Hashtag, HeartTick, ReceiptEdit } from 'iconsax-react'
 import React, { useEffect, useState } from 'react'
 
 import Content from '@/components/content'
 import HeroSection from '@/components/hero'
-import Tags from '@/components/tags'
-import { ArrowDown, GlobalSearch, Hashtag } from 'iconsax-react'
-import Tabs from '@/components/tabs'
 import { HomeTabs } from '@/utils'
 import { ITab } from '@/interface'
+import Tabs from '@/components/tabs'
+import Tags from '@/components/tags'
+import { useStateValue } from '@/context/StateProvider'
 
 const Page = () => {
   const [query, setQuery] = useState<string>('')
   const [articles, setArticles] = useState<any[]>([])
   const [tab, setTab] = useState<string>('global_feed')
-  const [tabs, setTabs] = useState<ITab[]>(HomeTabs) // Predifine tabs to be used: HomeTabs
+  const [tabs, setTabs] = useState<ITab[]>(HomeTabs) // Predefine tabs to be used: HomeTabs
   const [tag, setTag] = useState<string>('')
-
+  const [{ user }] = useStateValue()
 
   const handleAddTag = (tag: string) => {
     setTag(tag)
@@ -33,16 +34,34 @@ const Page = () => {
     }
 
     setTabs([...tabs, newTab])
-
   }
 
-  // always active tag tab when tag is set
+  // always activate tag tab when tag is set
   useEffect(() => {
     if (tag) {
       setTab('tag')
     }
   }, [tag])
 
+  // handle tabs based on user login status
+  useEffect(() => {
+    if (user) {
+      setTabs([...HomeTabs,
+      {
+        name: 'favorited_feed',
+        label: 'Favorites',
+        Icon: HeartTick
+      },
+      {
+        name: 'my_feed',
+        label: 'My Articles',
+        Icon: ReceiptEdit
+      }
+      ])
+    } else {
+      setTabs(HomeTabs)
+    }
+  }, [user])
 
   return (
     <>
@@ -50,7 +69,6 @@ const Page = () => {
       <div className='w-screen flex flex-col md:flex-row items-start justify-between  md:px-10 px-5 py-2 bg-[#f7f9fc]'>
         <div className='w-full md:w-[70%] md:flex flex-col items-start justify-center md:gap-x-4'>
           <div className='flex items-center justify-between w-full my-2 py-3'>
-
             {/* Page tabs */}
             {!query && <Tabs tab={tab} setTab={setTab} tabs={tabs} />}
             {

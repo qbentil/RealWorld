@@ -86,12 +86,14 @@ const Page = () => {
             !articles.length ? <ArticlesPreloader /> : <Content />
           }
           {/* load more button */}
-          <div className='flex justify-center w-full mt-4'>
-            <button className='flex items-center justify-center gap-x-2 text-sm text-primary-600 rounded bg-primary-50 font-bold px-3 py-1  hover:bg-primary-100 cursor-pointer'>
-              <ArrowDown />
-              Load More
-            </button>
-          </div>
+          {
+            articles.length > 0 && <div className='flex items-center justify-center w-full mt-4'>
+              <button className='flex items-center justify-center gap-x-2 bg-primary-500 text-white px-4 py-2 rounded-lg'>
+                <span>Load More</span>
+                <ArrowDown />
+              </button>
+            </div>
+          }
         </div>
         <Tags setTag={handleAddTag} />
       </div >

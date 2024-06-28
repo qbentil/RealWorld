@@ -1,9 +1,8 @@
 import React from 'react';
-
-const tags = ["Tag 1", "Tag 2", "Tag 3", "Tag 4", "Tag 5", "Tag 6"]
-
+import TagsPreloader from '../preloaders/tags';
 
 const Tags = ({ setTag }: { setTag: (tag: string) => void }) => {
+    const tags: string[] = [];
     return (
         <div className='w-full md:w-[25%] bg-gray-200 p-4'>
             <h2 className='text-lg font-bold mb-2'>
@@ -11,7 +10,7 @@ const Tags = ({ setTag }: { setTag: (tag: string) => void }) => {
             </h2>
             <div className='flex flex-wrap gap-2'>
                 {
-                    tags.map((tag, index) => (
+                    tags.length > 0 && tags.map((tag, index) => (
                         <div
                             key={index}
                             onClick={() => setTag(tag)}
@@ -19,6 +18,9 @@ const Tags = ({ setTag }: { setTag: (tag: string) => void }) => {
                             {tag}
                         </div>
                     ))
+                }
+                {
+                    !tags.length  && <TagsPreloader />
                 }
             </div>
         </div>

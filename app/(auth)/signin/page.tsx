@@ -3,16 +3,16 @@
 import * as Yup from 'yup';
 
 import React, { FC } from "react"
+import { setToken, setUser } from '@/hooks/localStorage';
 
+import { IUser } from '@/interface';
 import Link from 'next/link';
 import TextInput from '@/components/core/text-input';
+import UserService from '@/services/user.service';
 import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
 import { useStateValue } from '@/context/StateProvider';
-import UserService from '@/services/user.service';
-import { IUser } from '@/interface';
-import { setToken, setUser } from '@/hooks/localStorage';
 
 const LoginPage = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
@@ -103,7 +103,7 @@ const LoginPage = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none "
+                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none disabled:cursor-not-allowed disabled:bg-primary-200"
                             >
                                 {loading ? "Hang on..." : "Login"}
                             </button>

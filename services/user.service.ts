@@ -1,5 +1,5 @@
+import { APIError, devMode } from "@/utils";
 import { IServerAuthResponse, IUser, IUserLogin, IUserSignup, ServerCallback } from "@/interface";
-import { devMode, formatAPIErrors } from "@/utils";
 
 import Axios from "@/utils/Axios";
 
@@ -17,8 +17,7 @@ class UserService {
 
         } catch (error: any) {
             devMode && console.log(`update /user/signup`, error);
-            const message = error?.response && error.response?.data && error.response?.data?.errors ? formatAPIErrors(error.response.data.errors) : "Something went wrong! Try again.";
-            callback(message);
+            callback(APIError(error))
         }
     }
 
@@ -34,8 +33,7 @@ class UserService {
             callback(null, data.user);
         } catch (error: any) {
             devMode && console.log(`update /user/login`, error);
-            const message = error?.response && error.response?.data && error.response?.data?.errors ? formatAPIErrors(error.response.data.errors) : "Something went wrong! Try again.";
-            callback(message);
+            callback(APIError(error))
         }
     }
 
@@ -52,8 +50,7 @@ class UserService {
             callback(null, data.user);
         } catch (error: any) {
             devMode && console.log(`update /user`, error);
-            const message = error?.response && error.response?.data && error.response?.data?.errors ? formatAPIErrors(error.response.data.errors) : "Something went wrong! Try again.";
-            callback(message);
+            callback(APIError(error))
         }
     }
 

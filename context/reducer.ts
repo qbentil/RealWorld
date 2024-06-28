@@ -7,6 +7,8 @@ import { Action, State } from "@/interface";
 const actionTypes = {
   SET_USER: "SET_USER",
   SET_TOKEN: "SET_TOKEN",
+  LOGOUT: "LOGOUT",
+  SET_ARTICLES: "SET_ARTICLES"
 
 };
 
@@ -22,11 +24,16 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         token: action.payload
       };
-    case 'LOGOUT':
+    case actionTypes.LOGOUT:
       return {
         ...state,
         user: null,
         token: null
+      };
+    case actionTypes.SET_ARTICLES:
+      return {
+        ...state,
+        articles: action.payload
       };
     default:
       throw new Error("Invalid action type in context.");

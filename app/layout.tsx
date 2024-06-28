@@ -1,10 +1,11 @@
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
+
 import type { Metadata } from "next";
-import { ToastContainer } from "react-toastify";
-import reducer from "@/context/reducer";
-import initialState from "@/context/initialState";
 import { StateProvider } from "@/context/StateProvider";
+import { ToastContainer } from "react-toastify";
+import initialState from "@/context/initialState";
+import reducer from "@/context/reducer";
 
 export const metadata: Metadata = {
   title: "Conduit Feeds",

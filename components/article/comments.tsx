@@ -1,15 +1,18 @@
 
 "use client"
+import { useStateValue } from '@/context/StateProvider';
+import ArticleServices from '@/services/article.service';
 import toasts from '@/utils/toasts';
 import { Send2, Trash } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdDelete, MdDeleteForever } from 'react-icons/md';
 
 
-const ArticleComments = () => {
-    const [loggedIn, setLoggedIn] = useState<boolean>(true)
+const ArticleComments = ({ slug }: { slug: string }) => {
+    const [{ user }, dispatch] = useStateValue()
+    const [loading, setLoading] = useState<boolean>(true)
     const [comment, setComment] = useState<string>('')
     const [comments, setComments] = useState([
         {
@@ -68,11 +71,22 @@ const ArticleComments = () => {
         handleDeleteComment(id)
     }
 
+
+
+    useEffect(() => {
+        ArticleServices.getArticleComments(slug, (err, data) => {
+            setLoading(false)
+            if (!err) {
+                setComments(data.comments)
+            }
+        })
+    }, [slug])
+
     return (
         <div className='w-full flex flex-col items-start justify-between gap-y-2 '>
             {/* add comment */}
             {
-                loggedIn ? (<div className="w-full flex items-center justify-start gap-x-4 ">
+                user ? (<div className="w-full flex items-center justify-start gap-x-4 ">
                     <Image src={"/assets/avatar.jpeg"} alt="Your avatar" className="border w-10 h-10 rounded-full" width={40} height={40} />
                     <form onSubmit={handleAddComment} className="flex items-center justify-center px-4 w-full bg-gray-100 border-gray-300 border-2 rounded-full">
                         <input
@@ -89,7 +103,11 @@ const ArticleComments = () => {
                     <Link href='/signin' className='text-primary-600'>Signin</Link> or <Link href='/signup' className='text-primary-600'>Signup</Link> to add comments
                 </div>
             }
-            {comments.map(comment => (
+            {
+                loading && <div className='text-sm py-2'>Loading comments...</div>
+
+            }
+            {!loading && comments.length > 0 && comments.map(comment => (
                 <div key={comment.id} className="w-full flex items-start justify-start gap-x-4 ">
                     <Image src={"/assets/avatar.jpeg"} alt={comment.userName} className="border w-10 h-10 rounded-full" width={40} height={40} />
                     <div className="px-3 py-1 flex flex-col gap-y-2 items-start justify-between w-full bg-gray-100 rounded">
@@ -112,6 +130,9 @@ const ArticleComments = () => {
                     </div>
                 </div>
             ))}
+            {
+                !loading && comments.length === 0 && <div className='text-sm py-2'>No comments yet</div>
+            }
         </div>
 
     )

@@ -13,6 +13,7 @@ export interface ServerCallback {
 export interface State {
     user: IUser | null;
     token: string | null;
+    articles: IArticle[];
 
 }
 
@@ -68,4 +69,13 @@ export interface IArticle {
 
 export interface IServerAuthResponse extends IServerResponse {
     user: IUser
+}
+
+
+export interface IArticleQueries {
+    limit?: number;
+    offset?: number;
+    tag?: string;
+    author?: string;
+    favorited?: string;
 }

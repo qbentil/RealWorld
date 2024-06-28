@@ -1,13 +1,13 @@
 "use client"; // This is a client component 👈🏽
 
-import { fetchToken, fetchUser} from "@/hooks/localStorage";
+import { fetchToken, fetchUser } from "@/hooks/localStorage";
+
 import { State } from "@/interface";
-
-
 
 const initialState: State = {
   user: null,
   token: null,
+  articles: []
 };
 
 fetchUser((user: any) => {

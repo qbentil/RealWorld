@@ -1,24 +1,31 @@
 "use client"
 
 import { ArrowDown, GlobalSearch, Hashtag, HeartTick, ReceiptEdit } from 'iconsax-react'
+import { IArticle, IArticleQueries, ITab } from '@/interface'
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 
+import ArticleServices from '@/services/article.service'
 import ArticlesPreloader from '@/components/preloaders/articles'
 import Content from '@/components/content'
 import HeroSection from '@/components/hero'
 import { HomeTabs } from '@/utils'
-import { ITab } from '@/interface'
 import Tabs from '@/components/tabs'
 import Tags from '@/components/tags'
 import { useStateValue } from '@/context/StateProvider'
 
+const queryClient = new QueryClient();
+
 const Page = () => {
   const [query, setQuery] = useState<string>('')
-  const [articles, setArticles] = useState<any[]>([])
   const [tab, setTab] = useState<string>('global_feed')
   const [tabs, setTabs] = useState<ITab[]>(HomeTabs) // Predefine tabs to be used: HomeTabs
   const [tag, setTag] = useState<string>('')
-  const [{ user }] = useStateValue()
+  const [{ user, articles }, dispatch] = useStateValue()
+  const [fetchQueries, setFetchQueries] = useState<IArticleQueries>({
+    limit: 10
+  })
+  const [filteredArticles, setFilteredArticles] = useState<IArticle[]>([])
 
   const handleAddTag = (tag: string) => {
     setTag(tag)
@@ -64,8 +71,40 @@ const Page = () => {
     }
   }, [user])
 
+  useEffect(() => {
+    ArticleServices.getGlobalFeed({}, (error, data) => {
+      if (!error) {
+        dispatch({
+          type: "SET_ARTICLES",
+          payload: data.articles
+        })
+        setFilteredArticles(data.articles)
+        setFetchQueries({
+          ...fetchQueries, offset: data.articles.length,
+        })
+      }
+    })
+  }, [])
+
+  const handleQuerying = () => {
+    if (query) {
+      const filtered = articles.filter((article: IArticle) =>
+        article.title.toLowerCase().includes(query.toLowerCase()) ||
+        article.body.toLowerCase().includes(query.toLowerCase()) ||
+        article.description.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredArticles(filtered);
+    } else {
+      setFilteredArticles(articles);
+    }
+  }
+
+  useEffect(() => {
+    handleQuerying();
+  }, [query, articles]);
+
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <HeroSection onQuery={setQuery} />
       <div className='w-screen flex flex-col md:flex-row items-start justify-between  md:px-10 px-5 py-2 bg-[#f7f9fc]'>
         <div className='w-full md:w-[70%] md:flex flex-col items-start justify-center md:gap-x-4'>
@@ -83,11 +122,11 @@ const Page = () => {
             }
           </div>
           {
-            !articles.length ? <ArticlesPreloader /> : <Content />
+            !filteredArticles.length ? <ArticlesPreloader /> : <Content data={filteredArticles} />
           }
           {/* load more button */}
           {
-            articles.length > 0 && <div className='flex items-center justify-center w-full mt-4'>
+            filteredArticles.length > 0 && <div className='flex items-center justify-center w-full mt-4'>
               <button className='flex items-center justify-center gap-x-2 bg-primary-500 text-white px-4 py-2 rounded-lg'>
                 <span>Load More</span>
                 <ArrowDown />
@@ -97,7 +136,7 @@ const Page = () => {
         </div>
         <Tags setTag={handleAddTag} />
       </div >
-    </>
+    </QueryClientProvider>
   )
 }
 

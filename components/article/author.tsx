@@ -1,11 +1,14 @@
 "use client"
 
+import { IArticle } from '@/interface'
+import { formatDate } from '@/utils'
 import { Add } from 'iconsax-react'
 import Image from 'next/image'
 import React from 'react'
 import { IoMdHeart } from 'react-icons/io'
 
-const Author = () => {
+const Author = ({ data }: { data: IArticle | null }) => {
+
     return (
         <div className='w-full flex flex-col md:flex-row gap-y-4 md:gap-x-4 items-center md:items-center justify-center md:justify-start '>
             <div className='flex'>
@@ -17,8 +20,8 @@ const Author = () => {
                     height={48}
                 />
                 <div>
-                    <div className="text-primary-500 font-bold">John Nkrumah</div>
-                    <div className="text-gray-500 text-sm font-thin">Jan 24, 2024</div>
+                    <div className="text-primary-500 font-bold">{data?.author.username}</div>
+                    <div className="text-gray-500 text-sm font-thin">{formatDate(data?.createdAt || "")}</div>
                 </div>
             </div>
             <div className='flex gap-x-2'>
@@ -37,7 +40,7 @@ const Author = () => {
                         className="flex text-sm items-center  gap-x-2"
                     >
                         <IoMdHeart />
-                        favorite article(160)
+                        favorite article({data?.favoritesCount || 0})
                     </button>
                 </div>
             </div>

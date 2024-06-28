@@ -1,7 +1,10 @@
-import { ITab } from "@/interface";
 import { Book1, Global, HeartTick, Home, NoteAdd, ReceiptEdit, Setting2, ShieldSecurity, TagUser, UserEdit } from "iconsax-react";
-export { default as classNames } from "./classnames";
+
+import { ITab } from "@/interface";
 import { format } from "date-fns";
+
+export { default as classNames } from "./classnames";
+
 
 export const SideNavs = [
     {
@@ -32,16 +35,6 @@ export const HomeTabs: ITab[] = [
         label: 'Global Feeds',
         Icon: Global
     },
-    {
-        name: 'favorited_feed',
-        label: 'Favorites',
-        Icon: HeartTick
-    },
-    {
-        name: 'my_feed',
-        label: 'My Articles',
-        Icon: ReceiptEdit
-    }
 ]
 export const ProfileTabs: ITab[] = [
     {
@@ -71,44 +64,21 @@ export function formatDate(date: string, withTime = false): string {
     }
 }
 
-export const EncodeBase64 = (plainString: string): string => {
-    return Buffer.from(plainString, "utf8").toString("base64");
-};
-
-export const DecodeBase64 = (
-    encodedString: "student" | "lecturer" | "admin" | null
-): "student" | "lecturer" | "admin" => {
-    // Check if the input string is a valid base64-encoded string
-
-    if (!encodedString) {
-        throw new Error("Invalid base64-encoded string");
-    }
-    if (!isBase64(encodedString)) {
-        throw new Error("Invalid base64-encoded string");
-    }
-
-    // Decode the base64-encoded string
-    return Buffer.from(encodedString, "base64").toString("utf-8") as
-        | "student"
-        | "lecturer"
-        | "admin";
-};
-
-// Function to check if a string is a valid base64-encoded string
-const isBase64 = (str: string): boolean => {
-    try {
-        return Buffer.from(str, "base64").toString("base64") === str;
-    } catch (error) {
-        return false;
-    }
-};
 
 
-export const formatAPIErrors = (errors: Record<string, string[]>) => {
+const formatAPIErrors = (errors: Record<string, string[]>) => {
     return Object.entries(errors).map(([key, messages]) => {
         return `${key}: ${messages.join(', ')}`;
     }).join('; ');
 };
+
+
+export const APIError = (error: any): string => {
+    const msg: string = error?.response && error.response?.data && error.response?.data?.errors ? formatAPIErrors(error.response.data.errors)
+        : error?.message ? error.message : "Check console for error"
+
+    return msg.toLowerCase().includes("timeout") ? "Request timeout. Try again." : msg;
+}
 
 
 export const devMode = process.env.NEXT_PUBLIC_NODE_ENV === "development"

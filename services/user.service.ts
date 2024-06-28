@@ -55,6 +55,20 @@ class UserService {
     }
 
 
+    static async followAuthor(follow: boolean, username: string, callback: ServerCallback) {
+        try {
+            const { data } = await Axios<IServerAuthResponse>({
+                url: `/profiles/${username}/follow`,
+                method: follow ? "POST" : "DELETE"
+            });
+            callback(null, data);
+        } catch (error: any) {
+            devMode && console.log(`follow author`, error);
+            callback(APIError(error))
+        }
+    }
+
+
 }
 
 export default UserService;

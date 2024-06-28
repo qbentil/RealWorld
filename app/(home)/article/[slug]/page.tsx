@@ -6,7 +6,7 @@ import ArticleTage from "@/components/article/tags"
 import ArticleSkeleton from "@/components/preloaders/article"
 import { IArticle } from "@/interface"
 import ArticleServices from "@/services/article.service"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const Page = () => {
@@ -14,16 +14,22 @@ const Page = () => {
   const [loading, setLoading] = useState<boolean>(true)
 
   const pathname = usePathname()
+  const router = useRouter()
 
   useEffect(() => {
     const names = pathname.split("/")
     const slug = names[names.length - 1]
 
     ArticleServices.getArticle(slug, (err, data) => {
-      setArticle(data.article)
       setLoading(false)
+      if (!err) {
+        setArticle(data.article)
+      } else {
+        console.log(err)
+        router.push("/404")
+      }
     })
-  }, [pathname])
+  }, [pathname, router])
 
   if (loading) {
     return <ArticleSkeleton />

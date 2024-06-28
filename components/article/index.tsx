@@ -24,7 +24,7 @@ const Article = ({ data }: { data: IArticle }) => {
                         <div className="text-gray-500 text-sm font-thin">{formatDate(updatedAt)}</div>
                     </div>
                 </div>
-                <div className={`flex items-center mt-4 border ${!favorited ? "text-primary-500  border-primary-500 px-3 py-1  rounded-lg hover:bg-primary-500 hover:text-white" : "bg-primary-500 text-white"}  `}>
+                <div className={`flex items-center mt-4 border px-3 py-1  rounded-lg ${!favorited ? "text-primary-500  border-primary-500 hover:bg-primary-500 hover:text-white" : "bg-primary-500 text-white"}  `}>
                     <button
                         onClick={() => null}
                         className="flex text-sm items-center"

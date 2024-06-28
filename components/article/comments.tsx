@@ -1,7 +1,9 @@
 
 "use client"
 import { useStateValue } from '@/context/StateProvider';
+import { IAuthor, IComment } from '@/interface';
 import ArticleServices from '@/services/article.service';
+import { formatDate } from '@/utils';
 import toasts from '@/utils/toasts';
 import { Send2, Trash } from 'iconsax-react';
 import Image from 'next/image';
@@ -14,63 +16,32 @@ const ArticleComments = ({ slug }: { slug: string }) => {
     const [{ user }, dispatch] = useStateValue()
     const [loading, setLoading] = useState<boolean>(true)
     const [comment, setComment] = useState<string>('')
-    const [comments, setComments] = useState([
-        {
-            id: 1,
-            userName: "John Doe",
-            userPicture: "/path/to/user1.jpg",
-            date: "2024-06-25",
-            mine: false,
-            text: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos qui commodi a quidem temporibus voluptas incidunt molestiae, excepturi accusantium possimus, aperiam, quis dicta repudiandae nihil enim hic. Quia, rem in."
-        },
-        {
-            id: 2,
-            userName: "Jane Smith",
-            userPicture: "/path/to/user2.jpg",
-            date: "2024-06-26",
-            mine: false,
-            text: "Really insightful."
-        },
-        // More comments can be added here
-    ])
+    const [comments, setComments] = useState<IComment[]>([])
 
 
-    const handleAddComment = () => {
+    const handleAddComment = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!comment) return toasts.error("Error", "Comment cannot be empty")
         // Add comment to comments array
-        setComments([{
-            id: comments.length + 1,
-            userName: "Shadrack Bentil",
-            userPicture: "/path/to/user1.jpg",
-            date: new Date().toISOString().split('T')[0],
-            text: comment,
-            mine: true
-        }, ...comments,])
-        setComment('')
-    }
-
-    const handleDeleteComment = (id: number) => {
-        // Delete comment from comments array
-        setComments(comments.filter(comment => comment.id !== id))
-    }
-
-    const handleEditComment = (id: number, newText: string) => {
-        // Edit comment in comments array
-        setComments(comments.map(comment => {
-            if (comment.id === id) {
-                comment.text = newText
+        ArticleServices.addComment(slug, { body: comment }, (err, data) => {
+            if (!err) {
+                setComments([data.comment, ...comments])
+                setComment('')
+            } else {
+                toasts.error("Error", "Failed to add comment")
             }
-            return comment
-        }))
+        })
     }
 
-    const onEditClick = (id: number) => {
-        // set comment to edit in input field
-        const comment = comments.find(comment => comment.id === id)
-        setComment(comment?.text || '')
-        // delete comment from comments array
-        handleDeleteComment(id)
+    const handleDeleteComment = (comment: IComment) => {
+        // Delete comment from comments array
+        ArticleServices.deleteComment(slug, comment.id, (err, data) => {
+            if (err) {
+                return toasts.error("Error", "Failed to delete comment")
+            }
+            setComments(comments.filter(c => c.id !== comment.id))
+        })
     }
-
 
 
     useEffect(() => {
@@ -87,7 +58,7 @@ const ArticleComments = ({ slug }: { slug: string }) => {
             {/* add comment */}
             {
                 user ? (<div className="w-full flex items-center justify-start gap-x-4 ">
-                    <Image src={"/assets/avatar.jpeg"} alt="Your avatar" className="border w-10 h-10 rounded-full" width={40} height={40} />
+                    <Image src={user.image} alt={user.username} className="border w-10 h-10 rounded-full" width={40} height={40} />
                     <form onSubmit={handleAddComment} className="flex items-center justify-center px-4 w-full bg-gray-100 border-gray-300 border-2 rounded-full">
                         <input
                             value={comment}
@@ -95,7 +66,7 @@ const ArticleComments = ({ slug }: { slug: string }) => {
                             className="w-full py-2 text-sm text-gray-700 outline-none resize-none bg-transparent flex items-center justify-center"
                             placeholder="Add a comment"
                         />
-                        <button disabled={!comment} onClick={handleAddComment} className="flex items-center justify-center text-sm text-primary-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button disabled={!comment} type='submit' className="flex items-center justify-center text-sm text-primary-600 disabled:opacity-50 disabled:cursor-not-allowed">
                             <Send2 />
                         </button>
                     </form>
@@ -109,24 +80,24 @@ const ArticleComments = ({ slug }: { slug: string }) => {
             }
             {!loading && comments.length > 0 && comments.map(comment => (
                 <div key={comment.id} className="w-full flex items-start justify-start gap-x-4 ">
-                    <Image src={"/assets/avatar.jpeg"} alt={comment.userName} className="border w-10 h-10 rounded-full" width={40} height={40} />
+                    <Image src={comment.author.image} alt={comment.author.username} className="border w-10 h-10 rounded-full" width={40} height={40} />
                     <div className="px-3 py-1 flex flex-col gap-y-2 items-start justify-between w-full bg-gray-100 rounded">
                         <div className='w-full flex items-center justify-between'>
-                            <p className="text-base font-semibold font-mono">{comment.userName}</p>
+                            <p className="text-base font-semibold font-mono">{comment.author.username}</p>
                             <div className='flex items-center gap-x-2'>
                                 {/* delete iicon if comment is mine */}
                                 {
-                                    comment.mine &&
-                                    <button onClick={() => handleDeleteComment(comment.id)} className='text-xs text-red-500'>
+                                    comment.author.username === user.username &&
+                                    <button onClick={() => handleDeleteComment(comment)} className='text-xs text-red-500'>
                                         <MdDeleteForever />
                                     </button>
                                 }
                                 {/* edit icon if comment is mine */}
                                 {/* {comment.mine && <button onClick={() => onEditClick(comment.id)} className='text-xs text-primary-500'>Edit</button>} */}
-                                <p className="text-xs text-gray-500">{comment.date}</p>
+                                <p className="text-xs text-gray-500">{formatDate(comment.createdAt)}</p>
                             </div>
                         </div>
-                        <p className="text-sm text-gray-700">{comment.text}</p>
+                        <p className="text-sm text-gray-700">{comment.body}</p>
                     </div>
                 </div>
             ))}

@@ -79,3 +79,15 @@ export interface IArticleQueries {
     author?: string;
     favorited?: string;
 }
+
+
+export interface ICommentInput {
+    body: string;
+}
+
+export interface IComment extends ICommentInput {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    author: IAuthor;
+}

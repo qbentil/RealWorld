@@ -68,4 +68,49 @@ export default class ArticleServices {
         }
     }
 
+    static async favoriteArticle(favorite: boolean, slug: string, callback: ServerCallback) {
+        try {
+            const { data } = await Axios({
+                url: `/articles/${slug}/favorite`,
+                method: favorite ? "POST" : "DELETE"
+            });
+
+            callback(null, data);
+        } catch (error) {
+            devMode && console.log(`favorite article`, error);
+            callback(APIError(error))
+        }
+    }
+
+    static async addComment(slug: string, body: { body: string }, callback: ServerCallback) {
+        try {
+            const { data } = await Axios({
+                url: `/articles/${slug}/comments`,
+                method: "POST",
+                data: {
+                    comment: body
+                }
+            });
+
+            callback(null, data);
+        } catch (error) {
+            devMode && console.log(`add comment`, error);
+            callback(APIError(error))
+        }
+    }
+
+    static async deleteComment(slug: string, id: number, callback: ServerCallback) {
+        try {
+            const { data } = await Axios({
+                url: `/articles/${slug}/comments/${id}`,
+                method: "DELETE"
+            });
+
+            callback(null, data);
+        } catch (error) {
+            devMode && console.log(`delete comment`, error);
+            callback(APIError(error))
+        }
+    }
+
 }

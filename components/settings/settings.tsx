@@ -1,41 +1,62 @@
 'use client'
 
-
-import React, { ChangeEvent, useState } from "react";
-import Image from "next/image";
-import { MdEdit, MdRemove } from "react-icons/md";
-import { useFormik } from "formik";
 import * as Yup from "yup";
-import TextInput from "../core/text-input";
-import TextAreaInput from "../core/textarea-input";
-import { DocumentUpload, GalleryEdit, GalleryRemove } from "iconsax-react";
-import toasts from "@/utils/toasts";
-import { FaCameraRetro } from "react-icons/fa";
 
-const PasswordPolicyInitialState = {
-  lname: "",
-  fname: "",
-  phonenumber: "",
-  email: "bentilshadrack72@gmail.com",
-  bio: "",
-};
+import { MdEdit, MdRemove } from "react-icons/md";
+import React, { ChangeEvent, useState } from "react";
+
+import { FaCameraRetro } from "react-icons/fa";
+import { GalleryEdit } from "iconsax-react";
+import { IUser } from "@/interface";
+import Image from "next/image";
+import TextAreaInput from "../core/textarea-input";
+import TextInput from "../core/text-input";
+import UserService from "@/services/user.service";
+import { setUser } from "@/hooks/localStorage";
+import toasts from "@/utils/toasts";
+import { useFormik } from "formik";
+import { useStateValue } from "@/context/StateProvider";
 
 const Profile = () => {
+  const [{ user }, dispatch] = useStateValue()
+  const [loading, setLoading] = useState<boolean>(false)
   const { handleSubmit, ...form } = useFormik({
-    initialValues: PasswordPolicyInitialState,
+    initialValues: {
+      username: user.username,
+      email: user.email,
+      bio: user.bio
+    },
     validationSchema: Yup.object().shape({
-      lname: Yup.string().required("Last Name is required"),
-      fname: Yup.string().required("First Name is required"),
-      phonenumber: Yup.string().required("Phone Number is required"),
+      username: Yup.string().required("Username is required"),
       email: Yup.string().required("Email is required"),
       bio: Yup.string().required("Bio is required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
-      toasts.success("", "Profile Updated Successfully");
+      setLoading(true)
+      const updated: IUser = {
+        ...user, ...values,
+      }
+      UserService.update(updated, (error, data) => {
+        console.log({ error, data })
+        setLoading(false)
+        if (error) {
+          toasts.error("", error)
+          return
+        }
+        dispatch({
+          type: "SET_USER",
+          payload: data
+        })
+
+        // store user in local storage
+        setUser(data)
+        toasts.success("Success", "Profile updated successfully", {
+          toastId: "profile-update"
+        })
+      })
     },
   });
-  const [imageSrc, setImageSrc] = useState<string>("/assets/avatar.jpeg");
+  const [imageSrc, setImageSrc] = useState<string>(user.image);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
 
@@ -103,31 +124,11 @@ const Profile = () => {
       <form className="w-full flex flex-col gap-y-2 md:w-1/2 " onSubmit={handleSubmit}>
         <div>
           <TextInput
-            id="fname"
+            id="username"
             type="text"
-            label="First Name"
+            label="User Name"
             required
-            placeholder="Shadrack"
-            {...form}
-          />
-        </div>
-        <div>
-          <TextInput
-            id="lname"
-            type="text"
-            label="Last Name"
-            required
-            placeholder="Bentil"
-            {...form}
-          />
-        </div>
-        <div>
-          <TextInput
-            id="phonenumber"
-            type="text"
-            label="Phone Number"
-            required
-            placeholder="+233 556 081 4869"
+            placeholder="username"
             {...form}
           />
         </div>
@@ -137,7 +138,7 @@ const Profile = () => {
             type="email"
             label="Email"
             required
-            placeholder="bentilshadrack72@gmail.com"
+            placeholder="email"
             {...form}
             disabled
           />
@@ -154,9 +155,12 @@ const Profile = () => {
         {/* submit button */}
         <div className="w-full flex  justify-end items-end py-4 gap-x-4">
           <button
+            disabled={loading}
             className="w-1/2 border border-primary-500 hover:bg-primary-500 hover:text-white text-primary-500 py-2 px-4 rounded-md"
           >
-            Save Changes
+            {
+              loading ? "Hang on..." : "Save Changes"
+            }
           </button>
           <button
             type="reset"

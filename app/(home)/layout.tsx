@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <div className="min-h-screen relative pb-10">
       <DefNavbar />
-      {children}
+      <main className="container">{children}</main>
       <Footer />
     </div>
   );

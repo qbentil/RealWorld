@@ -3,16 +3,20 @@
 import * as Yup from 'yup';
 
 import React, { FC } from "react"
+import { setToken, setUser } from '@/hooks/localStorage';
 
+import { IUser } from '@/interface';
 import Link from 'next/link';
 import TextInput from '@/components/core/text-input';
+import UserService from '@/services/user.service';
 import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
-import { Back } from 'iconsax-react';
+import { useStateValue } from '@/context/StateProvider';
 
 const LoginPage = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [{ }, dispatch] = useStateValue()
     const router = useRouter()
 
     const { handleSubmit, ...form } = useFormik({
@@ -22,21 +26,36 @@ const LoginPage = () => {
         },
         validationSchema: Yup.object().shape({
             email: Yup.string().email().required(),
-            password: Yup.string().min(8).max(12).required(),
+            password: Yup.string().required(),
         }),
         onSubmit: async (values) => {
             setLoading(true)
-            console.log(values);
-
-            const timer = setTimeout(() => {
+            UserService.login(values, (error, data: IUser) => {
                 setLoading(false)
-                router.push("/dashboard");
-                toasts.success("Successful", "Welcome..", {
-                    position: 'bottom-right',
-                });
-            }, 3000); // 30000 milliseconds = 30 seconds
+                if (error) {
+                    toasts.error("", error)
+                    setLoading(false)
+                    return
+                }
 
-            return () => clearTimeout(timer);
+                // Dispatch user to global state
+                dispatch({
+                    type: "SET_USER",
+                    payload: data
+                })
+                dispatch({
+                    type: "SET_TOKEN",
+                    payload: data.token
+                })
+
+
+                // store user and token in local storage
+                setUser(data)
+                setToken(data.token)
+
+                toasts.success("Sucess", `Welcome back ${data.username}`)
+                router.push("/")
+            })
         }
     })
 
@@ -84,7 +103,7 @@ const LoginPage = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none "
+                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none disabled:cursor-not-allowed disabled:bg-primary-200"
                             >
                                 {loading ? "Hang on..." : "Login"}
                             </button>

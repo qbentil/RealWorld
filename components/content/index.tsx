@@ -1,19 +1,15 @@
+import { IArticle } from '@/interface'
 import Article from '../article'
 import React from 'react'
 
-const Content = () => {
+const Content = ({ data }: { data: IArticle[] }) => {
     return (
         <div className='w-full'>
-            <Article />
-            <Article />
-            <Article />
-            <Article />
-            <Article />
-            <Article />
-            <Article />
-            <Article />
-            <Article />
-            <Article />
+            {
+                data.map(article => (
+                    <Article data={article} key={article.slug} />
+                ))
+            }
         </div>
     )
 }

@@ -1,3 +1,4 @@
+import { fetchToken } from "@/hooks/localStorage";
 import axios from "axios";
 
 const Axios = axios.create({
@@ -9,10 +10,11 @@ const Axios = axios.create({
 });
 Axios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    fetchToken((token: string) => {
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    })
     return config;
   },
   (error) => {

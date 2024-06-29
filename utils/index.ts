@@ -1,7 +1,10 @@
-import { ITab } from "@/interface";
 import { Book1, Global, HeartTick, Home, NoteAdd, ReceiptEdit, Setting2, ShieldSecurity, TagUser, UserEdit } from "iconsax-react";
+
+import { ITab } from "@/interface";
 import { format } from "date-fns";
+
 export { default as classNames } from "./classnames";
+
 
 export const SideNavs = [
     {
@@ -32,16 +35,6 @@ export const HomeTabs: ITab[] = [
         label: 'Global Feeds',
         Icon: Global
     },
-    {
-        name: 'favorited_feed',
-        label: 'Favorites',
-        Icon: HeartTick
-    },
-    {
-        name: 'my_feed',
-        label: 'My Articles',
-        Icon: ReceiptEdit
-    }
 ]
 export const ProfileTabs: ITab[] = [
     {
@@ -70,3 +63,22 @@ export function formatDate(date: string, withTime = false): string {
         return "";
     }
 }
+
+
+
+const formatAPIErrors = (errors: Record<string, string[]>) => {
+    return Object.entries(errors).map(([key, messages]) => {
+        return `${key}: ${messages.join(', ')}`;
+    }).join('; ');
+};
+
+
+export const APIError = (error: any): string => {
+    const msg: string = error?.response && error.response?.data && error.response?.data?.errors ? formatAPIErrors(error.response.data.errors)
+        : error?.message ? error.message : "Check console for error"
+
+    return msg.toLowerCase().includes("timeout") ? "Request timeout. Try again." : msg;
+}
+
+
+export const devMode = process.env.NEXT_PUBLIC_NODE_ENV === "development"

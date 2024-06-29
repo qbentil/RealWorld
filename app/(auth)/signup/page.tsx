@@ -6,6 +6,7 @@ import React, { FC } from "react"
 
 import Link from 'next/link';
 import TextInput from '@/components/core/text-input';
+import UserService from '@/services/user.service';
 import toasts from '@/utils/toasts';
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation';
@@ -23,19 +24,21 @@ const Page = () => {
         validationSchema: Yup.object().shape({
             username: Yup.string().required(),
             email: Yup.string().email().required(),
-            password: Yup.string().min(8).max(12).required(),
+            password: Yup.string().required(),
         }),
         onSubmit: async (values) => {
             setLoading(true)
-            console.log(values);
-
-            const timer = setTimeout(() => {
+            UserService.signup(values, (error, data) => {
                 setLoading(false)
-                router.push("/signin");
-                toasts.success("Success", "Continue to login.");
-            }, 3000); // 30000 milliseconds = 30 seconds
-
-            return () => clearTimeout(timer);
+                if (error) {
+                    toasts.error("", error)
+                    setLoading(false)
+                    return
+                }
+                console.log(data)
+                toasts.success("Sucess", "Signup successful")
+                router.push("/signin")
+            })
         }
     })
 
@@ -90,7 +93,7 @@ const Page = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none "
+                                className="w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none disabled:cursor-not-allowed disabled:bg-primary-200"
                             >
                                 {loading ? "Hang on..." : "Signup"}
                             </button>

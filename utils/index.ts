@@ -82,3 +82,7 @@ export const APIError = (error: any): string => {
 
 
 export const devMode = process.env.NEXT_PUBLIC_NODE_ENV === "development"
+
+export const formatTextToMarkdown = (text: string): string => {
+    return text.replace(/\\n/g, '  \n');
+};

@@ -125,4 +125,21 @@ export default class ArticleServices {
         }
     }
 
+    static async createArticle(body: { title: string, description: string, body: string, tagList: string[] }, callback: ServerCallback) {
+        try {
+            const { data } = await Axios({
+                url: `/articles`,
+                method: "POST",
+                data: {
+                    article: body
+                }
+            });
+
+            callback(null, data);
+        } catch (error) {
+            devMode && console.log(`create article`, error);
+            callback(APIError(error))
+        }
+    }
+
 }

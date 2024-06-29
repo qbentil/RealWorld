@@ -1,8 +1,23 @@
-import React from 'react';
+"use client"
+
+
+import React, { useEffect, useState } from 'react';
 import TagsPreloader from '../preloaders/tags';
+import ArticleServices from '@/services/article.service';
 
 const Tags = ({ setTag }: { setTag: (tag: string) => void }) => {
-    const tags: string[] = [];
+    const [tags, setTags] = useState<string[]>([]);
+
+
+
+    useEffect(() => {
+        ArticleServices.fetchTags((error, data) => {
+            if (error) {
+                return;
+            }
+            setTags(data.tags);
+        });
+    }, []);
     return (
         <div className='w-full md:w-[25%] bg-gray-200 p-4'>
             <h2 className='text-lg font-bold mb-2'>
@@ -20,7 +35,7 @@ const Tags = ({ setTag }: { setTag: (tag: string) => void }) => {
                     ))
                 }
                 {
-                    !tags.length  && <TagsPreloader />
+                    !tags.length && <TagsPreloader />
                 }
             </div>
         </div>

@@ -12,8 +12,6 @@ export default class ArticleServices {
                 .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(queries[key as keyof IArticleQueries] ?? '')}`)
                 .join('&');
 
-            console.log(queryString)
-
             const { data } = await Axios({
                 url: `/articles?${queryString}`,
                 method: "GET",
@@ -21,7 +19,7 @@ export default class ArticleServices {
 
             callback(null, data);
         } catch (error) {
-            devMode && console.log(`get /global feed`, error);
+            devMode && console.log(`get /articles?${queries}`, error);
             callback(APIError(error))
         }
     }
@@ -109,6 +107,20 @@ export default class ArticleServices {
             callback(null, data);
         } catch (error) {
             devMode && console.log(`delete comment`, error);
+            callback(APIError(error))
+        }
+    }
+
+    static async fetchTags(callback: ServerCallback) {
+        try {
+            const { data } = await Axios({
+                url: `/tags`,
+                method: "GET"
+            });
+
+            callback(null, data);
+        } catch (error) {
+            devMode && console.log(`fetch tags`, error);
             callback(APIError(error))
         }
     }

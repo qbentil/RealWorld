@@ -9,17 +9,23 @@ import toasts from '@/utils/toasts';
 import { useFormik } from 'formik';
 
 interface ArticleFormProps {
-
+    data?: {
+        title: string;
+        description: string;
+        body: string;
+        tagList: string[];
+        slug: string;
+    }
 }
 
-const ArticleForm: React.FC<ArticleFormProps> = () => {
+const ArticleForm: React.FC<ArticleFormProps> = ({ data }) => {
     const [loading, setLoading] = useState(false)
     const { handleSubmit, ...form } = useFormik({
         initialValues: {
-            title: "",
-            description: "",
-            body: "",
-            tags: ""
+            title: data?.title || "",
+            description: data?.description || "",
+            body: data?.body || "",
+            tags: data?.tagList.join(",") || ""
         },
         validationSchema: Yup.object({
             title: Yup.string()
@@ -39,15 +45,27 @@ const ArticleForm: React.FC<ArticleFormProps> = () => {
             }
 
             setLoading(true)
-            ArticleServices.createArticle(body, (err, data) => {
-                setLoading(false)
-                if (err) {
-                    toasts.error("Failed", err)
-                } else {
-                    form.resetForm();
-                    toasts.success("Success", "Article created successfully")
-                }
-            })
+            if (!data) {
+                ArticleServices.createArticle(body, (err, data) => {
+                    setLoading(false)
+                    if (err) {
+                        toasts.error("Failed", err)
+                    } else {
+                        form.resetForm();
+                        toasts.success("Success", "Article created successfully")
+                    }
+                })
+            } else {
+                ArticleServices.updateArticle(data.slug, body, (err, data) => {
+                    setLoading(false)
+                    if (err) {
+                        toasts.error("Failed", err)
+                    } else {
+                        // form.resetForm();
+                        toasts.success("Success", "Article updated successfully")
+                    }
+                })
+            }
 
         }
     })
@@ -91,7 +109,7 @@ const ArticleForm: React.FC<ArticleFormProps> = () => {
                     disabled={loading}
                 >
                     {
-                        loading ? "Hang on..." : "Create Article"
+                        loading ? "Hang on..." : data ? "Update Article" : "Create Article"
                     }
                 </button>
             </div>

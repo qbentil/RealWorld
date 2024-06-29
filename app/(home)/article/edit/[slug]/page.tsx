@@ -2,13 +2,24 @@
 
 import { Add, RulerPen } from "iconsax-react"
 import { useEffect, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
 
 import ArticleForm from "@/components/new-article"
+import ArticleServices from "@/services/article.service"
 import AuthWrapper from "@/components/authwrapper"
 import CreateArticleLoader from "@/components/preloaders/create-article"
 
+interface IUpdateArticle {
+    title: string;
+    description: string;
+    body: string;
+    tagList: string[];
+    slug: string;
+}
+
 const Page = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const [article, setArticle] = useState(null)
     useEffect(() => {
         // Simulate loading time
         const timer = setTimeout(() => {
@@ -18,9 +29,33 @@ const Page = () => {
         return () => clearTimeout(timer);
     }, []);
 
+
+
+
+    const pathname = usePathname()
+    const router = useRouter()
+
+    useEffect(() => {
+        const names = pathname.split("/")
+        const slug = names[names.length - 1]
+
+        ArticleServices.getArticle(slug, (err, data) => {
+            setIsLoading(false)
+            if (!err) {
+                setArticle(data.article)
+            } else {
+                console.log(err)
+                router.push("/404")
+            }
+        })
+    }, [pathname, router])
+
+
+
     if (isLoading) {
         return <CreateArticleLoader />;
     }
+
     return (
         <AuthWrapper>
             <div className='w-screen flex flex-col items-center justify-center'>
@@ -47,7 +82,7 @@ const Page = () => {
                 </div>
                 {/* page constent */}
                 <div className='w-[80%] flex items-center justify-center'>
-                    <ArticleForm />
+                    <ArticleForm data={article as unknown as IUpdateArticle} />
                 </div>
             </div>
         </AuthWrapper>

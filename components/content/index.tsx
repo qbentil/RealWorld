@@ -1,13 +1,13 @@
-import { IArticle } from '@/interface'
 import Article from '../article'
+import { IArticle } from '@/interface'
 import React from 'react'
 
-const Content = ({ data }: { data: IArticle[] }) => {
+const Content = ({ data, onDelete }: { data: IArticle[], onDelete: (slug: string) => void }) => {
     return (
         <div className='w-full'>
             {
                 data.map(article => (
-                    <Article data={article} key={article.slug} />
+                    <Article data={article} key={article.slug} onDelete={onDelete} />
                 ))
             }
         </div>

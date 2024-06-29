@@ -7,18 +7,14 @@ import React, { useEffect, useState } from 'react'
 import ArticleServices from '@/services/article.service'
 import ArticlesPreloader from '@/components/preloaders/articles'
 import Content from '@/components/content'
+import ErrorComponent from '@/components/error'
 import HeroSection from '@/components/hero'
 import { HomeTabs } from '@/utils'
+import NoRecordsFound from '@/components/no-content'
 import Tabs from '@/components/tabs'
 import Tags from '@/components/tags'
+import toasts from '@/utils/toasts'
 import { useStateValue } from '@/context/StateProvider'
-import NoRecordsFound from '@/components/no-content'
-import ErrorComponent from '@/components/error'
-
-
-
-
-
 
 const Page = () => {
   const [query, setQuery] = useState<string>('')
@@ -176,6 +172,20 @@ const Page = () => {
     })
   }
 
+  const handleDelete = (slug: string) => {
+    ArticleServices.deleteArticle(slug || "", (err, data) => {
+      if (!err) {
+        toasts.success("Deleted", "Article deleted successfully")
+        const newArticles = articles.filter((article: IArticle) => article.slug !== slug)
+        dispatch({
+          type: "SET_ARTICLES",
+          payload: newArticles
+        })
+        setFilteredArticles(newArticles)
+      }
+    })
+  }
+
   // always activate tag tab when tag is set
   useEffect(() => {
     if (tag) {
@@ -241,7 +251,7 @@ const Page = () => {
                   !loading && filteredArticles.length <= 0 && <NoRecordsFound />
                 }
                 {
-                  !loading && filteredArticles && <Content data={filteredArticles} />
+                  !loading && filteredArticles && <Content onDelete={handleDelete} data={filteredArticles} />
                 }
                 {/* load more button */}
                 {

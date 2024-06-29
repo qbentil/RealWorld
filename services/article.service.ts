@@ -141,5 +141,36 @@ export default class ArticleServices {
             callback(APIError(error))
         }
     }
+    
+    static async updateArticle(slug: string, body: { title: string, description: string, body: string, tagList: string[] }, callback: ServerCallback) {
+        try {
+            const { data } = await Axios({
+                url: `/articles/${slug}`,
+                method: "PUT",
+                data: {
+                    article: body
+                }
+            });
+
+            callback(null, data);
+        } catch (error) {
+            devMode && console.log(`update article`, error);
+            callback(APIError(error))
+        }
+    }
+
+    static async deleteArticle(slug: string, callback: ServerCallback) {
+        try {
+            const { data } = await Axios({
+                url: `/articles/${slug}`,
+                method: "DELETE"
+            });
+
+            callback(null, data);
+        } catch (error) {
+            devMode && console.log(`delete article`, error);
+            callback(APIError(error))
+        }
+    }
 
 }

@@ -11,6 +11,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.48.0",
     "axios": "^1.7.2",
+    "date-fns": "^3.6.0",
     "formik": "^2.4.6",
     "iconsax-react": "^0.0.8",
     "next": "14.2.3",

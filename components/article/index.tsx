@@ -53,7 +53,7 @@ const Article = ({ data, onDelete }: { data: IArticle, onDelete: (slug: string) 
                     </div>
                 </div>
                 <div className="flex items-center gap-x-2">
-                    {article.author.username === user?.username || "" && (
+                    {article.author.username === user?.username  && (
                         <>
                             <Link
                                 className="text-green-500 flex items-center gap-x-2 border border-green-500 px-3 py-1  rounded-lg hover:bg-green-500 hover:text-white"

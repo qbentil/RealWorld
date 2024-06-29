@@ -46,7 +46,7 @@ const CHangepassword = () => {
 
   return (
     <div className='w-full flex items-center justify-center py-2'>
-      <div className='w-1/2 px-4 border rounded py-2'>
+      <div className='w-full md:w-1/2 px-4 border rounded py-2'>
         <div className='text-sm gap-x-2 border-b font-semibold text-gray-700 mb-4 flex flex-row-reverse justify-end py-4 items-center w-full'>
           Change Password
           <LockCircle />

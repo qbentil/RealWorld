@@ -215,7 +215,7 @@ const Page = () => {
     < >
       <HeroSection onQuery={setQuery} />
       <div className='w-screen flex flex-col md:flex-row items-start justify-between  md:px-10 px-5 py-2 bg-[#f7f9fc]'>
-        <div className='w-full md:w-[70%] md:flex flex-col items-start justify-center md:gap-x-4'>
+        <div className='w-full md:w-[70%] md:flex flex-col items-start justify-center md:gap-x-4 sm:gap-y-5'>
           <div className='flex items-center justify-between w-full my-2 py-3'>
             {/* Page tabs */}
             {!query && <Tabs tab={tab} setTab={handleTabChange} tabs={tabs} />}

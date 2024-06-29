@@ -39,7 +39,7 @@ This project implements the [RealWorld example app](https://github.com/gothinkst
 ## Project Structure
 
 The project is structured as follows:
-.
+```bash
 ├── components # Reusable React components
 ├── app # Main application components and pages including layouts
 ├── services # API integration and services
@@ -49,7 +49,7 @@ The project is structured as follows:
 ├── hooks # Custom Services with local storage state
 ├── public # Static assets (images, icons, etc.)
 └── README.md # Project documentation
-
+```
 
 
 ## Getting Started

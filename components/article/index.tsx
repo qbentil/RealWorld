@@ -34,7 +34,7 @@ const Article = ({ data }: { data: IArticle }) => {
                     </button>
                 </div>
             </div>
-            <Link href={`/article/${slug}`} className="text-2xl font-bold mb-2">{title}</Link>
+            <Link href={`/article/${slug}`} className="text-2xl font-bold mb-2 line-clamp-2">{title}</Link>
             <p className="text-gray-700 mb-4">
                 {description}
             </p>

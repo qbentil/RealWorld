@@ -43,3 +43,12 @@ body::-webkit-scrollbar-thumb,
   background: #c4c4c4;
   border-radius: 0.5rem;
 }
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}

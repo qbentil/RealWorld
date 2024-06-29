@@ -2,7 +2,6 @@
 
 import { ArrowDown, GlobalSearch, Hashtag, HeartTick, ReceiptEdit } from 'iconsax-react'
 import { IArticle, IArticleQueries, ITab } from '@/interface'
-// import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 
 import ArticleServices from '@/services/article.service'
@@ -15,7 +14,6 @@ import Tags from '@/components/tags'
 import { useStateValue } from '@/context/StateProvider'
 import NoRecordsFound from '@/components/no-content'
 import ErrorComponent from '@/components/error'
-import toasts from '@/utils/toasts'
 
 
 
@@ -158,6 +156,26 @@ const Page = () => {
 
   }
 
+  const loadMore = () => {
+    setLoading(true)
+    ArticleServices.getGlobalFeed(fetchQueries, (error, data) => {
+      setLoading(false)
+      if (!error) {
+        dispatch({
+          type: "SET_ARTICLES",
+          payload: [...articles, ...data.articles]
+        })
+        setFilteredArticles([...filteredArticles, ...data.articles])
+        setFetchQueries({
+          ...fetchQueries, offset: data.articles.length,
+        })
+        setArticlesCount(data.articlesCount)
+      } else {
+        setError(error)
+      }
+    })
+  }
+
   // always activate tag tab when tag is set
   useEffect(() => {
     if (tag) {
@@ -188,10 +206,6 @@ const Page = () => {
   useEffect(() => {
     fetchArticles()
   }, [tab])
-
-
-
-
 
   useEffect(() => {
     handleQuerying();
@@ -232,7 +246,7 @@ const Page = () => {
                 {/* load more button */}
                 {
                   articlesCount > filteredArticles.length && <div className='flex items-center justify-center w-full mt-4'>
-                    <button className='flex items-center justify-center gap-x-2 bg-primary-500 text-white px-4 py-2 rounded-lg'>
+                    <button onClick={loadMore} className='flex items-center justify-center gap-x-2 bg-primary-500 text-white px-4 py-2 rounded-lg'>
                       <span>Load More</span>
                       <ArrowDown />
                     </button>
